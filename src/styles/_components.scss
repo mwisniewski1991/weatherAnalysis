@@ -1,4 +1,5 @@
 .header{
+    margin: 1rem 0;
 
     &__title{
         display: block;
@@ -28,6 +29,52 @@
 
     &__logo{
         order: 1;
+    }
+
+}
+
+.info{
+    margin: 1rem 0;
+
+    &__button{
+    }
+
+    &__textBox{
+        // max-height: 0rem;
+        
+        transform: scaleY(0);
+        background: rgba($colorBlack, .5);
+        
+        transition: all .5s;
+
+
+        &--show{
+            // max-height: 6rem;
+            transform: scaleY(1);
+        }
+    }
+
+    &__paragraph{
+        padding: 10px;
+        font-size: 1.5rem;
+        transform: scaleY(0);
+
+        &--show{
+            transform: scaleY(1);
+        }
+    }
+
+}
+
+.button{
+    width: 8rem;
+    height: 3rem;
+    
+    background-color: rgba($colorWhite,.2);
+    border-radius: 10%;
+
+    &:active{
+        transform: translate(0, 2px);
     }
 
 }
