@@ -1,0 +1,33 @@
+.header{
+
+    &__title{
+        display: block;
+        text-align: center;
+        font-size: 5rem;
+        letter-spacing: 1rem;
+        text-shadow: 1px 1px 10px $colorBlack;
+    }
+
+}
+
+.footer{
+    height: 50px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    @media screen and (max-width: $break-small){
+        flex-direction: column;
+    }
+
+
+    &__author{
+        font-size: 1.5rem;
+        order: 2;
+    }
+
+    &__logo{
+        order: 1;
+    }
+
+}
