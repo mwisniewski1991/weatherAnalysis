@@ -1,8 +1,53 @@
 import '../styles/main.scss'; //IMPORT SASS
+import 'babel-polyfill'; //IMPORT BABEL FOR ASYNC/AWAIT
 import { htmlComponents } from './base';
+import DataCollector from './apidata/data';
+import ChartCreator from './charts/chart'
+
+
+const state = {};
+
+
+const appCtrl = async () => {
+
+//GET DATA
+state.dataCollector = new DataCollector;
+state.chartCreator = new ChartCreator;
+
+
+//DAILY WEEKLY
+await state.dataCollector.loadDailyWeeklyData(1); //data
+
+const { dailyWeekklyData  } = state.dataCollector.dataGroup;
+// console.log(dailyWeekklyData);
+
+state.chartCreator.renderChart('dailyWeeklyChart', dailyWeekklyData);
+state.chartCreator.renderChart('hourlyChart', dailyWeekklyData);
+
+
+// state.
 
 
 
+
+
+console.log(state.dataCollector);
+console.log(state.chartCreator);
+}
+appCtrl();
+
+
+
+
+
+//RESIZE CHARTS
+const resizeCharts = () =>{
+
+    state.chartCreator.redrawChart();
+};
+
+
+//INFO BOX FUCNTION
 const setUpMainFooter = () => {
 
     const button = htmlComponents.info.button;
@@ -17,7 +62,6 @@ const setUpMainFooter = () => {
     main.style.transition = `transition: all .5s linear`;
 
 }
-
 const showInfo = () => {
 
     console.log("GIT")
@@ -32,6 +76,10 @@ const showInfo = () => {
 
 //EVENST LISTENNERS
 htmlComponents.info.button.addEventListener('click', showInfo);
+
+window.addEventListener('resize', resizeCharts);
+
+
 // window.onload = () => {
 //     setUpMainFooter()
 // }
