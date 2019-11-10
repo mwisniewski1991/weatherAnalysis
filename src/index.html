@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,15 +9,12 @@
     <link href="https://fonts.googleapis.com/css?family=Titillium+Web:300,400,700&display=swap" rel="stylesheet">
     <title>Weather Analysis</title>
 </head>
-<body>
-    
-    <header class="header">
-        <h1 class="header__title">Weather Analysis</h1> 
-    </header>
 
-    <div class="info">
-        
-    </div>
+<body>
+
+    <header class="header">
+        <h1 class="header__title heading heading--one">Weather Analysis</h1>
+    </header>
 
     <div class="info">
         <button class="button info__button">
@@ -24,34 +22,79 @@
         </button>
         <div class="info__textBox">
             <p class="info__paragraph">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo rerum doloribus natus tempore ipsa ullam, fugiat iusto commodi in minus illum numquam enim tempora nobis possimus. Unde autem reprehenderit quidem placeat magni aliquam, eveniet vitae saepe veritatis, blanditiis non odioż?
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo rerum doloribus natus tempore ipsa ullam,
+                fugiat iusto commodi in minus illum numquam enim tempora nobis possimus. Unde autem reprehenderit quidem
+                placeat magni aliquam, eveniet vitae saepe veritatis, blanditiis non odioż?
             </p>
         </div>
     </div>
-    
+
     <main class="layout layout--up">
 
         <section class="layout__section block">
-            <div class="block__title"></div>
-            <div class="block__controller"></div>
+            <div class="block__title">
+                <h2 class="block__heading heading heading--two">
+                    CHART
+                </h2>
+            </div>
+            <div class="block__controller">
+                <button class="block__button button">
+                    Less
+                </button>
+                <button class="block__button button">
+                    More
+                </button>
+            </div>
+            <div class="block__chart"></div>
+        </section>
+
+        <section class="layout__section block">
+            <div class="block__title">
+                <h2 class="block__heading heading heading--two">
+                    CHART
+                </h2>
+            </div>
+            <div class="block__controller">
+                <button class="block__button button">
+                    Less
+                </button>
+                <button class="block__button button">
+                    More
+                </button>
+            </div>
             <div class="block__chart"></div>
         </section>
 
 
-        <section class="layout__section"></section>
-        <section class="layout__section"></section>
+        <section class="layout__section block">
+            <div class="block__title">
+                <h2 class="block__heading heading heading--two">
+                    CHART
+                </h2>
+            </div>
+            <div class="block__controller">
+                <button class="block__button button">
+                    Less
+                </button>
+                <button class="block__button button">
+                    More
+                </button>
+            </div>
+            <div class="block__chart"></div>
+        </section>
 
 
     </main>
     <footer class="footer">
         <span class="footer__author">
-            Created by: Mateusz  Wiśniewski 
+            Created by: Mateusz Wiśniewski
         </span>
         <div class="footer__logo">
             LOGO
         </div>
     </footer>
-    
+
     <script src="./js/index.js"></script>
 </body>
+
 </html>
