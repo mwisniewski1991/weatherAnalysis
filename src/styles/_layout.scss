@@ -4,6 +4,13 @@
     grid-template-columns: 1fr 1fr;
     grid-gap: 15px 15px;
 
+    transition: all .2s linear;
+
+    &--up{
+        transform: translate(0, var(--mainOffset));
+    }
+
+
     @media screen and (max-width: $break-medium){
         grid-template-columns: 1fr;
         grid-gap: 20px 0;

@@ -9,6 +9,10 @@
     box-sizing: inherit;
 }
 
+:root{
+    --mainOffset: 0px;
+}
+
 html {
     box-sizing: border-box;
     font-size: 62.5%; //1rem = 10px
@@ -29,8 +33,6 @@ html {
 }
 
 body{
-    height: 100vh; //TESTING 
-
     background: radial-gradient($colorTwo, $colorOne 90%);
     padding: 15px;
     font-family: 'Titillium Web', sans-serif;

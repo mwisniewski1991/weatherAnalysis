@@ -34,22 +34,24 @@
 }
 
 .info{
+    height: auto;
     margin: 1rem 0;
 
+    &--show{
+    }
+
+
     &__button{
+        width: 100%;
+        margin-bottom: 10px;
     }
 
     &__textBox{
-        // max-height: 0rem;
-        
         transform: scaleY(0);
         background: rgba($colorBlack, .5);
-        
-        transition: all .5s;
-
+        transition: all .2s linear;
 
         &--show{
-            // max-height: 6rem;
             transform: scaleY(1);
         }
     }
@@ -57,17 +59,26 @@
     &__paragraph{
         padding: 10px;
         font-size: 1.5rem;
-        transform: scaleY(0);
-
-        &--show{
-            transform: scaleY(1);
-        }
     }
 
 }
 
+.block{
+    &__title{
+
+    }
+
+    &__controller{
+
+    }
+
+    &__chart{
+        
+    }
+}
+
 .button{
-    width: 8rem;
+    // width: 8rem;
     height: 3rem;
     
     background-color: rgba($colorWhite,.2);
@@ -78,3 +89,4 @@
     }
 
 }
+
