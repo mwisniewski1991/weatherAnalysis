@@ -9,7 +9,7 @@
 }
 
 .footer{
-    height: 50px;
+    // height: 50px;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -26,6 +26,10 @@
 
     &__logo{
         order: 1;
+
+        & img{
+            width: 250px;
+        }
     }
 
 }
