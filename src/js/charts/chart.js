@@ -40,18 +40,19 @@ export default class ChartCreator {
          const margin = {top:40, right:40, bottom:40, left:40};
          const svgWidth = width - margin.left - margin.right;
          const svgHeight = height - margin.top - margin.bottom;
+
  
          //CREATE MAIN SVG
-         this.chartGroups[chartType].svg = d3.select(div)
+         this.chartGroups[chartType].svgG = d3.select(div)
                          .append('svg')
-                             .attr('class','chartSvg')
-                             .attr('width', svgWidth + margin.left + margin.right)
-                             .attr('height', svgHeight + margin.top + margin.bottom)
-                            //  .attr('viewBox','0 0 500 200')
-                            //  .attr('preserveAspectRatio','xMidYMid meet')
-                         .append('g')
-                             .attr("transform",
-                             "translate(" + margin.left + "," + margin.top + ")");
+                             .attr('class', `${chartType}__chartSvg`)
+                             .attr('width', width)
+                             .attr('height', height)
+                        .append('g')
+                            .attr("transform","translate(" + margin.left + "," + margin.top + ")");
+
+                                
+        this.chartGroups[chartType].svg = d3.select(`.${chartType}__chartSvg`);                          
 
 
         //X AXIS                        
@@ -60,7 +61,7 @@ export default class ChartCreator {
                             .range([0, svgWidth])
                             .nice()
 
-        this.chartGroups[chartType].xAxisG = this.chartGroups[chartType].svg.append('g')
+        this.chartGroups[chartType].xAxisG = this.chartGroups[chartType].svgG.append('g')
                             .attr('transform', `translate(0, ${svgHeight})`)
                             .call(d3.axisBottom(this.chartGroups[chartType].xScale)
                                         .tickPadding(10));
@@ -80,7 +81,7 @@ export default class ChartCreator {
                             .range([svgHeight, 0])
                             .nice();                      
 
-        this.chartGroups[chartType].yAxisG = this.chartGroups[chartType].svg.append('g')
+        this.chartGroups[chartType].yAxisG = this.chartGroups[chartType].svgG.append('g')
                             .call(d3.axisLeft(this.chartGroups[chartType].yScale))
 
         // yAxisG.append('text')
@@ -92,35 +93,46 @@ export default class ChartCreator {
         //         .attr('x', -svgHeight/2)
         //         .attr('y', -60)
         //         .text(yLabel);                                        
+        
 
     }
 
     redrawChart(){
 
-        const chartType = 'dailyWeeklyChart';
-        
-        const { div } = this.chartGroups[chartType];
+        console.log('----------------------')
 
+
+        const chartType = 'dailyWeeklyChart';
+        const { div } = this.chartGroups[chartType];
         const { height, width } = document.querySelector(div).getBoundingClientRect()
-        // console.log(height, width);
+
+        // const width = 300;
 
         const margin = {top:40, right:40, bottom:40, left:40};
         const svgWidth = width - margin.left - margin.right;
         const svgHeight = height - margin.top - margin.bottom;
 
+        console.log(d3.select(`.${chartType}__chartSvg`))
+        console.log(this.chartGroups[chartType].svg)
+
+
         this.chartGroups[chartType].svg
-                                    .style('width', `${svgWidth}px`)
-                                    .style('height', `${svgHeight}px`);
-
-
+                                    .attr('width', width)
+                                    .attr('height', height);
+        //X AXIS    
         this.chartGroups[chartType].xScale.range([0, svgWidth])
+        this.chartGroups[chartType].xAxisG
+                                    .call(d3.axisBottom(this.chartGroups[chartType].xScale))
+                                    .attr('transform', `translate(0, ${svgHeight})`);
 
-        this.chartGroups[chartType].xAxisG.call(d3.axisBottom(this.chartGroups[chartType].xScale));
+        //Y AXIS    
+        this.chartGroups[chartType].yScale.range([svgHeight, 0])
+        this.chartGroups[chartType].yAxisG.call(d3.axisLeft(this.chartGroups[chartType].yScale));
 
-        console.log('----------------------')
-        console.log(this.chartGroups[chartType].svg.style('width'));
-        console.log(this.chartGroups[chartType].svg.xScale.range());
-        
+
+        // // console.log(`svg width: ${this.chartGroups[chartType].svg.style('width')}`);
+        // console.log(this.chartGroups[chartType].xAxisG.style('width'));
+        // // console.log(this.chartGroups[chartType].xScale.range());
 
     }
 

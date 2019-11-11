@@ -22,12 +22,10 @@ const { dailyWeekklyData  } = state.dataCollector.dataGroup;
 // console.log(dailyWeekklyData);
 
 state.chartCreator.renderChart('dailyWeeklyChart', dailyWeekklyData);
-state.chartCreator.renderChart('hourlyChart', dailyWeekklyData);
+// state.chartCreator.renderChart('hourlyChart', dailyWeekklyData);
 
 
 // state.
-
-
 
 
 
@@ -40,11 +38,7 @@ appCtrl();
 
 
 
-//RESIZE CHARTS
-const resizeCharts = () =>{
 
-    state.chartCreator.redrawChart();
-};
 
 
 //INFO BOX FUCNTION
@@ -73,12 +67,41 @@ const showInfo = () => {
     main.classList.toggle('layout--up')
 
 };
-
 //EVENST LISTENNERS
 htmlComponents.info.button.addEventListener('click', showInfo);
 
+
+//RESIZE CHARTS
+const resizeCharts = () =>{
+    state.chartCreator.redrawChart();
+};
 window.addEventListener('resize', resizeCharts);
 
+//RESIZE SECTION
+const resizeSection = () => {
+
+    const width = window.innerWidth
+    console.log(width * 2);
+
+    if(width>900){
+        const newWidth = width / 2 - 30;
+        htmlComponents.sections.forEach( (el) =>{
+            el.style.width = `${newWidth}px`;
+        });
+    }
+    if(width<=900){
+        const newWidth = width - 45;
+        htmlComponents.sections.forEach( (el) =>{
+            el.style.width = `${newWidth}px`;
+        });
+    }
+
+    
+
+    // section.style.width = `${width}px`;
+};
+
+window.addEventListener('resize', resizeSection);
 
 // window.onload = () => {
 //     setUpMainFooter()
