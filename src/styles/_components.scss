@@ -86,6 +86,42 @@
     }
 }
 
+
+.chartLine{
+
+    & text{
+        font-family: 'Titillium Web', sans-serif;
+    }
+
+    &__axisLabel{
+        font-size: 1.5rem;
+        fill: $tickColor;
+        font-family: 'Titillium Web', sans-serif;
+        letter-spacing: 2px;
+    }
+
+    &__axisLine{
+
+        &--yLine .tick line{
+            opacity: .1;
+        }
+    }
+
+    &__axisLine path, &__axisLine line{
+        stroke: $gridlinesColor;
+    }
+
+    &__axisLine .tick{
+        // color: darkred;
+        color: $tickColor;
+    }
+
+
+
+
+}
+
+
 .button{
     // width: 8rem;
     // height: 3rem;
