@@ -1,6 +1,5 @@
-const Datastore = require('nedb');
-// const moment = require('moment');
-import { dailyForecastWeekly } from './dailyForecastWeekly';
+import { dailyForecastWeekly } from './dailyForecastWeekly'; //TEST
+const moment = require('moment');
 
 export default class DataCollector{
 
@@ -21,8 +20,12 @@ export default class DataCollector{
 
     loadDailyWeeklyData(week){
         //DEV MODE FROM FILE - LATER FROM SERVER
-        this.dataGroup.dailyWeekklyData = dailyForecastWeekly;
 
+        dailyForecastWeekly.forEach(el => {
+            el.time = el.time * 1000; //MODIFY 
+        })
+
+        this.dataGroup.dailyWeekklyData = dailyForecastWeekly;
     }
 
 }

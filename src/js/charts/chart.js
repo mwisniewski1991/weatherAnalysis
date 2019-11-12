@@ -1,5 +1,7 @@
 import * as d3 from "d3";
 import { htmlComponents } from '../base';
+const moment = require('moment');
+
 
 export default class ChartCreator {
     constructor(){
@@ -24,18 +26,9 @@ export default class ChartCreator {
 
     renderChart(chartType, data, varOne, varTwo){ //param: data obj, first var, secondVar
 
-        // console.log(data);
-        // data.forEach( el => {
-        //     console.log(d3.timeParse("%Y-%m-%d"));
-        //     el.time = d3.timeParse("%Y-%m-%d")(el.time);
-        // });
-        // console.log(data);
-
-
         const { div } = this.chartGroups[chartType];
 
-        
-        const x = 'temperatureMax'
+        const x = 'time'
         const y = 'temperatureMin'
 
         //DATA
@@ -44,6 +37,7 @@ export default class ChartCreator {
         const yValue =  (d) => d[y];
         const yLabel =  y; 
  
+        const yValueTwo =  (d) => d[y] - 2;
 
         //DIMENSION
         //READ DIMENSIONS OD BASED DIV
@@ -74,79 +68,102 @@ export default class ChartCreator {
 
         //X AXIS      
         {
-
-            this.chartGroups[chartType].xScale = d3.scaleLinear()
-            .domain([d3.min(data, xValue), d3.max(data, xValue)])
-            .range([0, svgWidth])
-            .nice()
+            this.chartGroups[chartType].xScale = d3.scaleTime()
+                .domain([d3.min(data, xValue), d3.max(data, xValue)])
+                .range([0, svgWidth])
+                .nice()
             
             this.chartGroups[chartType].xAxisG = this.chartGroups[chartType].svgG.append('g')
-            .attr('class', 'chartLine__axisLine')
-            .attr('transform', `translate(0, ${svgHeight})`)
-            .call(d3.axisBottom(this.chartGroups[chartType].xScale)
-            .tickPadding(10));
-            
+                .attr('class', 'chartLine__axisLine')
+                .attr('transform', `translate(0, ${svgHeight})`)
+                .call(d3.axisBottom(this.chartGroups[chartType].xScale)
+                    .ticks(7)
+                    .tickFormat(d3.timeFormat("%d.%m"))
+                    .tickPadding(10));
+                
             this.chartGroups[chartType].xAxisG.append('text')
-            .attr('class','chartLine__axisLabel')
-            .attr('x', svgWidth/2)
-            .attr('y',50)
-            .text(xLabel);                                        
+                .attr('class','chartLine__axisLabel')
+                .attr('x', svgWidth/2)
+                .attr('y',50)
+                .text(xLabel);                                        
         }                  
 
         //Y AXIS
         {
 
             this.chartGroups[chartType].yScale = d3.scaleLinear() 
-            .domain(d3.extent(data, yValue))
-            .range([svgHeight, 0])
-            .nice();                      
+            // .domain(d3.extent(data, yValue))
+                .domain([0, d3.max(data, yValue)])
+                .range([svgHeight, 0])
+                .nice();                      
             
             this.chartGroups[chartType].yAxisG = this.chartGroups[chartType].svgG.append('g')
-            .attr('class', 'chartLine__axisLine chartLine__axisLine--yLine')
-            .call(d3.axisLeft(this.chartGroups[chartType].yScale)
-            .tickSize(-svgWidth));
+                .attr('class', 'chartLine__axisLine chartLine__axisLine--yLine')
+                .call(d3.axisLeft(this.chartGroups[chartType].yScale)
+                    .ticks(7)
+                    .tickSize(-svgWidth));
             
             this.chartGroups[chartType].yAxisG.append('text')
-            .attr('class','chartLine__axisLabel')
-            .attr('text-anchor', 'middle')
-            .attr('transform','rotate(-90)')
-            .attr('x', -svgHeight/2)
-            .attr('y', -40)
-            .text(yLabel);             
+                .attr('class','chartLine__axisLabel')
+                .attr('text-anchor', 'middle')
+                .attr('transform','rotate(-90)')
+                .attr('x', -svgHeight/2)
+                .attr('y', -40)
+                .text(yLabel);             
         }
                                             
                                             
         //LINE      
         {
-            // this.chartGroups[chartType].path = this.chartGroups[chartType].svgG.append('path')
-            //     .datum('data')
-            //     .attr('fill','none')
-            //     .attr("stroke", "steelblue")
-            //     .attr("stroke-width", 1.5)
-            //     .attr("d", d3.line()
-            //         .x((d) => this.chartGroups[chartType].xScale(d.temperatureMin))
-            //         .y((d) => this.chartGroups[chartType].yScale(d.temperatureMax))
-            //     )
 
-            // this.chartGroups[chartType].svgG.append('g')
-            //         .selectAll("dot")
-            //         .data(data)
-            //         .enter()
-            //         .append("circle")
-            //         .attr("cx", (d) => this.chartGroups[chartType].xScale(d.temperatureMax))
-            //         .attr("cy", (d) => this.chartGroups[chartType].yScale(d.temperatureMin))
-            //         .attr("r", 4)
-            //         .style("fill", "darkred")
+            this.chartGroups[chartType].path = this.chartGroups[chartType].svgG
+                .append('path')
+                    .datum(data)
+                .attr('class', 'chartLine__mainLine chartLine__mainLine--actual')
+                .attr("d", d3.line()
+                            .x((d) => this.chartGroups[chartType].xScale(xValue(d)))
+                            .y((d) => this.chartGroups[chartType].yScale(yValue(d)))
+                            // .curve(d3.curveBasis));
+                            .curve(d3.curveCatmullRom.alpha(.5)));
 
+
+            this.chartGroups[chartType].svgG.append('g')
+                    .selectAll("dot")
+                        .data(data)
+                        .enter()
+                    .append("circle")
+                        .attr('class', 'chartLine__mainDott chartLine__mainDott--actual')
+                        .attr("cx", (d) => this.chartGroups[chartType].xScale(xValue(d)))
+                        .attr("cy", (d) => this.chartGroups[chartType].yScale(yValue(d)))
+                        .attr("r", 3)
+
+
+            this.chartGroups[chartType].path = this.chartGroups[chartType].svgG
+                .append('path')
+                .datum(data)
+                .attr('class', 'chartLine__mainLine chartLine__mainLine--forecast')
+                .attr("d", d3.line()
+                            .x(d => this.chartGroups[chartType].xScale(xValue(d)))
+                            .y(d => this.chartGroups[chartType].yScale(yValueTwo(d)))
+                            // .curve(d3.curveBasis));
+                            .curve(d3.curveCatmullRom.alpha(.5)));
+            
+            this.chartGroups[chartType].svgG.append('g')
+                .selectAll("dot")
+                    .data(data)
+                    .enter()
+                .append("circle")
+                    .attr('class', 'chartLine__mainDott chartLine__mainDott--forecast')
+                    .attr("cx", (d) => this.chartGroups[chartType].xScale(xValue(d)))
+                    .attr("cy", (d) => this.chartGroups[chartType].yScale(yValueTwo(d)))
+                    .attr("r", 3)
 
         }                                     
                                     
 
     }
 
-    redrawChart(chartType){
-
-        // const chartType = 'dailyWeeklyChart';
+    redrawChart(chartType, data){
 
         const { div } = this.chartGroups[chartType];
         const { height, width } = document.querySelector(div).getBoundingClientRect()
@@ -160,12 +177,15 @@ export default class ChartCreator {
         this.chartGroups[chartType].svg
                                     .attr('width', width)
                                     .attr('height', height);
+
         //X AXIS    
         this.chartGroups[chartType].xScale.range([0, svgWidth])
         this.chartGroups[chartType].xAxisG
                                     .attr('class', 'chartLine__axisLine')
                                     .attr('transform', `translate(0, ${svgHeight})`)
                                     .call(d3.axisBottom(this.chartGroups[chartType].xScale)
+                                        .ticks(7)
+                                        .tickFormat(d3.timeFormat("%d.%m"))
                                         .tickPadding(10));
 
         //Y AXIS    
@@ -173,6 +193,7 @@ export default class ChartCreator {
         this.chartGroups[chartType].yAxisG
                                     .attr('class', 'chartLine__axisLine chartLine__axisLine--yLine')
                                     .call(d3.axisLeft(this.chartGroups[chartType].yScale)
+                                        .ticks(7)
                                         .tickSize(-svgWidth));
 
 
@@ -181,14 +202,5 @@ export default class ChartCreator {
         // // console.log(this.chartGroups[chartType].xScale.range());
 
     }
-
-    renderChartAxis(){
-    }
-
-    renderChartDat(){
-        
-    }
-
-
 
 }

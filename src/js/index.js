@@ -22,20 +22,14 @@ const { dailyWeekklyData  } = state.dataCollector.dataGroup;
 // console.log(dailyWeekklyData);
 
 state.chartCreator.renderChart('dailyWeeklyChart', dailyWeekklyData);
-// state.chartCreator.renderChart('hourlyChart', dailyWeekklyData);
-// state.chartCreator.renderChart('dailyDailyChart', dailyWeekklyData);
-
-
-// state.
-
+state.chartCreator.renderChart('hourlyChart', dailyWeekklyData);
+state.chartCreator.renderChart('dailyDailyChart', dailyWeekklyData);
 
 
 console.log(state.dataCollector);
 console.log(state.chartCreator);
 }
 appCtrl();
-
-
 
 
 
@@ -73,7 +67,9 @@ htmlComponents.info.button.addEventListener('click', showInfo);
 
 //RESIZE CHARTS
 const resizeCharts = () =>{
-    state.chartCreator.redrawChart('dailyWeeklyChart');
+    const { dailyWeekklyData  } = state.dataCollector.dataGroup;
+
+    state.chartCreator.redrawChart('dailyWeeklyChart', dailyWeekklyData);
     state.chartCreator.redrawChart('hourlyChart');
     state.chartCreator.redrawChart('dailyDailyChart');
 };

@@ -120,8 +120,33 @@
         color: $tickColor;
     }
 
+    &__mainLine{
+        fill: none;
+        stroke-width: 1.5px;
 
+        &--actual{
+            stroke: $colorWhite;
 
+        }
+
+        &--forecast{
+            stroke: $colorTwo;
+        }
+    }
+
+    &__mainDott{
+        // fill: $colorWhite;
+
+        &--actual{
+            fill: $colorWhite;
+            stroke: $colorWhite;
+        }
+
+        &--forecast{
+            fill: $colorTwo;
+            stroke: $colorTwo;
+        }
+    }
 
 }
 
