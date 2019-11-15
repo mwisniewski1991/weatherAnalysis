@@ -18,12 +18,13 @@ state.chartCreator = new ChartCreator;
 //DAILY WEEKLY
 await state.dataCollector.loadDailyWeeklyData(1); //data
 
-const { dailyWeekklyData  } = state.dataCollector.dataGroup;
+const { dailyWeekklyData, dailyWeekklyDataTwo } = state.dataCollector.dataGroup;
 // console.log(dailyWeekklyData);
 
-state.chartCreator.renderChart('dailyWeeklyChart', dailyWeekklyData);
-state.chartCreator.renderChart('hourlyChart', dailyWeekklyData);
-state.chartCreator.renderChart('dailyDailyChart', dailyWeekklyData);
+        const y = 'temperatureMin'
+state.chartCreator.renderChart('dailyWeeklyChart', [dailyWeekklyData, dailyWeekklyDataTwo], 'time', 'temperatureMin');
+state.chartCreator.renderChart('hourlyChart', [dailyWeekklyData, dailyWeekklyDataTwo], 'time', 'temperatureMin');
+state.chartCreator.renderChart('dailyDailyChart', [dailyWeekklyData, dailyWeekklyDataTwo], 'time', 'temperatureMin');
 
 
 console.log(state.dataCollector);
@@ -52,7 +53,6 @@ const setUpMainFooter = () => {
 }
 const showInfo = () => {
 
-    console.log("GIT")
     const infoBox = htmlComponents.info.textBox;
     const main = htmlComponents.main;
     const footer = htmlComponents.footer;
@@ -67,11 +67,11 @@ htmlComponents.info.button.addEventListener('click', showInfo);
 
 //RESIZE CHARTS
 const resizeCharts = () =>{
-    const { dailyWeekklyData  } = state.dataCollector.dataGroup;
+    const { dailyWeekklyData, dailyWeekklyDataTwo  } = state.dataCollector.dataGroup;
 
-    state.chartCreator.redrawChart('dailyWeeklyChart', dailyWeekklyData);
-    state.chartCreator.redrawChart('hourlyChart');
-    state.chartCreator.redrawChart('dailyDailyChart');
+    state.chartCreator.redrawChart('dailyWeeklyChart', [dailyWeekklyData, dailyWeekklyDataTwo]);
+    state.chartCreator.redrawChart('hourlyChart', [dailyWeekklyData, dailyWeekklyDataTwo]);
+    state.chartCreator.redrawChart('dailyDailyChart', [dailyWeekklyData, dailyWeekklyDataTwo]);
 };
 window.addEventListener('resize', resizeCharts);
 
