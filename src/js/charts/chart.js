@@ -52,7 +52,7 @@ export default class ChartCreator {
         const svgWidth = width - margin.left - margin.right;
         const svgHeight = height - margin.top - margin.bottom;
 
- 
+
         //CREATE MAIN SVG
         {
 
@@ -65,17 +65,16 @@ export default class ChartCreator {
              .append('g')
              .attr("transform", `translate(${margin.left}, ${margin.top})`);
              
-             
-             
              this.chartGroups[chartType].svg = d3.select(`#${chartType}__chartSvg`);                          
         }
 
         //X AXIS      
         {
+
             this.chartGroups[chartType].xScale = d3.scaleTime()
                 .domain([d3.min(data[0], xValue), d3.max(data[0], xValue)])
                 .range([0, svgWidth])
-                .nice()
+                // .nice()
             
             this.chartGroups[chartType].xAxisG = this.chartGroups[chartType].svgG.append('g')
                 .attr('class', 'chartLine__axisLine')
@@ -97,7 +96,7 @@ export default class ChartCreator {
 
             this.chartGroups[chartType].yScale = d3.scaleLinear() 
             // .domain(d3.extent(data, yValue))
-                .domain([d3.min(data[0], yValue) - 5, d3.max(data[0], yValue) + 2])
+                .domain([this.calcMinValue(data, y) - 1, this.calcMaxValue(data, y) + 1])
                 .range([svgHeight, 0])
                 .nice();                      
             
@@ -117,7 +116,6 @@ export default class ChartCreator {
                 .text(yLabel);             
         }
                                             
-                                            
         //LINE      
         {
             data.forEach( (dataset) => {
@@ -129,6 +127,7 @@ export default class ChartCreator {
             })
         }                                     
     }
+
 
     drawPath(chartType, data, {x, y}){
         //arguments: forWhichChart, data, currentVairable
@@ -221,5 +220,28 @@ export default class ChartCreator {
                 .attr("cx", (d) => this.chartGroups[chartType].xScale(xValue(d)))
                 .attr("cy", (d) => this.chartGroups[chartType].yScale(yValue(d)))
         });
+    }
+
+
+    calcMinValue(datasets, variable){
+
+        const datasetsValues = [];
+
+        datasets.forEach((data) => {
+            const tempValues = data.map(el => el[variable]);         
+            datasetsValues.push(...tempValues);
+        });
+
+        return d3.min(datasetsValues);
+    }
+
+    calcMaxValue(datasets, variable){
+        const datasetsValues = [];
+
+        datasets.forEach((data) => {
+            const tempValues = data.map(el => el[variable]);         
+            datasetsValues.push(...tempValues);
+        });
+        return d3.max(datasetsValues);
     }
 }

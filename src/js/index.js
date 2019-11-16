@@ -18,13 +18,12 @@ state.chartCreator = new ChartCreator;
 //DAILY WEEKLY
 await state.dataCollector.loadDailyWeeklyData(1); //data
 
-const { dailyWeekklyData, dailyWeekklyDataTwo } = state.dataCollector.dataGroup;
+const { dailyWeekklyTemp, dailySummariseTemp, dailyForecastWeeklyTwo } = state.dataCollector.dataGroup;
 // console.log(dailyWeekklyData);
 
-        const y = 'temperatureMin'
-state.chartCreator.renderChart('dailyWeeklyChart', [dailyWeekklyData, dailyWeekklyDataTwo], 'time', 'temperatureMin');
-state.chartCreator.renderChart('hourlyChart', [dailyWeekklyData, dailyWeekklyDataTwo], 'time', 'temperatureMin');
-state.chartCreator.renderChart('dailyDailyChart', [dailyWeekklyData, dailyWeekklyDataTwo], 'time', 'temperatureMin');
+state.chartCreator.renderChart('dailyWeeklyChart', [dailySummariseTemp, dailyWeekklyTemp], 'time', 'temperatureMin');
+// state.chartCreator.renderChart('hourlyChart', [dailyWeekklyData, dailyWeekklyDataTwo], 'time', 'temperatureMin');
+// state.chartCreator.renderChart('dailyDailyChart', [dailyWeekklyData, dailyWeekklyDataTwo], 'time', 'temperatureMin');
 
 
 console.log(state.dataCollector);
@@ -67,11 +66,12 @@ htmlComponents.info.button.addEventListener('click', showInfo);
 
 //RESIZE CHARTS
 const resizeCharts = () =>{
-    const { dailyWeekklyData, dailyWeekklyDataTwo  } = state.dataCollector.dataGroup;
 
-    state.chartCreator.redrawChart('dailyWeeklyChart', [dailyWeekklyData, dailyWeekklyDataTwo]);
-    state.chartCreator.redrawChart('hourlyChart', [dailyWeekklyData, dailyWeekklyDataTwo]);
-    state.chartCreator.redrawChart('dailyDailyChart', [dailyWeekklyData, dailyWeekklyDataTwo]);
+    const { dailyWeekklyTemp, dailySummariseTemp} = state.dataCollector.dataGroup;
+
+    state.chartCreator.redrawChart('dailyWeeklyChart', [dailySummariseTemp, dailyWeekklyTemp]);
+    // state.chartCreator.redrawChart('hourlyChart', [dailyWeekklyData, dailyWeekklyDataTwo]);
+    // state.chartCreator.redrawChart('dailyDailyChart', [dailyWeekklyData, dailyWeekklyDataTwo]);
 };
 window.addEventListener('resize', resizeCharts);
 
