@@ -18,12 +18,13 @@ state.chartCreator = new ChartCreator;
 //DAILY WEEKLY
 await state.dataCollector.loadDailyWeeklyData(1); //data
 
-const { dailyWeekklyTemp, dailySummariseTemp, dailyForecastWeeklyTwo } = state.dataCollector.dataGroup;
-// console.log(dailyWeekklyData);
+state.chartCreator.renderChart(state.dataCollector.dailyWeeklyTemp);
+state.chartCreator.renderChart(state.dataCollector.dailyDailyTemp);
+state.chartCreator.renderChart(state.dataCollector.hourlyTemp);
 
-state.chartCreator.renderChart('dailyWeeklyChart', [dailySummariseTemp, dailyWeekklyTemp], 'time', 'temperatureMin');
-// state.chartCreator.renderChart('hourlyChart', [dailyWeekklyData, dailyWeekklyDataTwo], 'time', 'temperatureMin');
 // state.chartCreator.renderChart('dailyDailyChart', [dailyWeekklyData, dailyWeekklyDataTwo], 'time', 'temperatureMin');
+
+// state.chartCreator.renderChart('hourlyChart', [dailyWeekklyData, dailyWeekklyDataTwo], 'time', 'temperatureMin');
 
 
 console.log(state.dataCollector);
@@ -67,11 +68,9 @@ htmlComponents.info.button.addEventListener('click', showInfo);
 //RESIZE CHARTS
 const resizeCharts = () =>{
 
-    const { dailyWeekklyTemp, dailySummariseTemp} = state.dataCollector.dataGroup;
-
-    state.chartCreator.redrawChart('dailyWeeklyChart', [dailySummariseTemp, dailyWeekklyTemp]);
-    // state.chartCreator.redrawChart('hourlyChart', [dailyWeekklyData, dailyWeekklyDataTwo]);
-    // state.chartCreator.redrawChart('dailyDailyChart', [dailyWeekklyData, dailyWeekklyDataTwo]);
+    state.chartCreator.redrawChart(state.dataCollector.dailyWeeklyTemp);
+    state.chartCreator.redrawChart(state.dataCollector.dailyDailyTemp);
+    state.chartCreator.redrawChart(state.dataCollector.hourlyTemp);
 };
 window.addEventListener('resize', resizeCharts);
 

@@ -124,28 +124,24 @@
         fill: none;
         stroke-width: 1.5px;
 
-        &--actual{
-            stroke: $colorWhite;
+        &--actual{stroke: $colorActual;}
+        &--forecast{stroke: $colorForecast;}
 
-        }
-
-        &--forecast{
-            stroke: $colorTwo;
-        }
+        &--actualMin{stroke: $colorActualMin;}
+        &--actualMax{stroke: $colorActualMax;}
+        &--forecastMin{stroke: $colorForecastMin;}
+        &--forecastMax{stroke: $colorForecastMax;}
     }
 
     &__mainDott{
-        // fill: $colorWhite;
 
-        &--actual{
-            fill: $colorWhite;
-            stroke: $colorWhite;
-        }
+        &--actual{fill: $colorActual; stroke: $colorActual;}
+        &--forecast{fill: $colorForecast; stroke: $colorForecast;}
 
-        &--forecast{
-            fill: $colorTwo;
-            stroke: $colorTwo;
-        }
+        &--actualMin{fill: $colorActualMin; stroke: $colorActualMin;}
+        &--actualMax{fill: $colorActualMax;stroke: $colorActualMax;}
+        &--forecastMin{fill: $colorForecastMin; stroke: $colorForecastMin;}
+        &--forecastMax{fill: $colorForecastMax; stroke: $colorForecastMax;}
     }
 
 }

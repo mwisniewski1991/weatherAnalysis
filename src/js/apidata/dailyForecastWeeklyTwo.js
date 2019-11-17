@@ -1,9 +1,0 @@
-export const dailyForecastWeeklyTwo = [
-  {"collectTime":1573423501259,"time":1573254000,"temperatureMin":15,"temperatureMax":16,"humidity":0.67,"pressure":1011.6,"cloudCover":0.77,"sunriseTime":1573884240,"sunsetTime":1573915980,"moonPhase":0.64,"_id":"Vj9OuZBtuTOPignX"},
-  {"collectTime":1573423501259,"time":1573340400,"temperatureMin":5,"temperatureMax":11,"humidity":0.77,"pressure":1019.4,"cloudCover":0.91,"sunriseTime":1573970760,"sunsetTime":1574002260,"moonPhase":0.68,"_id":"MqyBR5fR6H0VWspK"},
-  {"collectTime":1573423501259,"time":1573426800,"temperatureMin":1,"temperatureMax":7,"humidity":0.85,"pressure":1015.9,"cloudCover":0.31,"sunriseTime":1573451700,"sunsetTime":1573484400,"moonPhase":0.48,"_id":"shFGbZiOWIpR4smc"},
-  {"collectTime":1573423501259,"time":1573513200,"temperatureMin":4,"temperatureMax":11,"humidity":0.81,"pressure":1010.6,"cloudCover":0.95,"sunriseTime":1573538220,"sunsetTime":1573570680,"moonPhase":0.51,"_id":"i2PZisATyZJJngfa"},
-  {"collectTime":1573423501259,"time":1573599600,"temperatureMin":6,"temperatureMax":11,"humidity":0.88,"pressure":1004.1,"cloudCover":1,"sunriseTime":1573624740,"sunsetTime":1573657020,"moonPhase":0.54,"_id":"rmhPPKkFc0AYuYpL"},
-  {"collectTime":1573423501259,"time":1573686000,"temperatureMin":4,"temperatureMax":11,"humidity":0.79,"pressure":1009.4,"cloudCover":0.88,"sunriseTime":1573711200,"sunsetTime":1573743300,"moonPhase":0.57,"_id":"IXXzZXPw3ueTkzME"},
-  {"collectTime":1573423501259,"time":1573772400,"temperatureMin":5,"temperatureMax":15,"humidity":0.77,"pressure":1009.8,"cloudCover":0.26,"sunriseTime":1573797720,"sunsetTime":1573829640,"moonPhase":0.61,"_id":"tA8xHlG3U6dxgPqe"},
-  ];
