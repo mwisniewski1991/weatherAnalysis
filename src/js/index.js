@@ -16,23 +16,81 @@ state.chartCreator = new ChartCreator;
 
 
 //DAILY WEEKLY
-await state.dataCollector.loadDailyWeeklyData(1); //data
+await state.dataCollector.loadData(1); //data
 
-state.chartCreator.renderChart(state.dataCollector.dailyWeeklyTemp);
-state.chartCreator.renderChart(state.dataCollector.dailyDailyTemp);
-state.chartCreator.renderChart(state.dataCollector.hourlyTemp);
+await state.dataCollector.loadDailyWeeklyData(1);
+
+state.chartCreator.renderChart(state.dataCollector.dailyWeekly);
+// state.chartCreator.renderChart(state.dataCollector.dailyDailyTemp);
+// state.chartCreator.renderChart(state.dataCollector.hourlyTemp);
 
 // state.chartCreator.renderChart('dailyDailyChart', [dailyWeekklyData, dailyWeekklyDataTwo], 'time', 'temperatureMin');
 
 // state.chartCreator.renderChart('hourlyChart', [dailyWeekklyData, dailyWeekklyDataTwo], 'time', 'temperatureMin');
 
 
-console.log(state.dataCollector);
+// console.log(state.dataCollector);
 console.log(state.chartCreator);
 }
 appCtrl();
 
 
+//CHANGE DAILYWEEKLY DATA
+
+const changeWeeklyDailyData = (e) => {
+
+    const weeksNum = state.dataCollector.dailyWeekly.weeksNum;
+    const weeksCalc =  weeksNum + parseInt(e.target.value);
+    
+
+    if(weeksCalc > 0 && weeksCalc<4){
+        state.dataCollector.dailyWeekly.weeksNum = weeksCalc;
+    };
+
+    state.dataCollector.loadDailyWeeklyData(state.dataCollector.dailyWeekly.weeksNum);
+    state.chartCreator.changeChart(state.dataCollector.dailyWeekly);
+
+
+};
+
+htmlComponents.dailyWeekly.buttonsWeeks.forEach((button) => {
+    button.addEventListener('click', changeWeeklyDailyData)
+});
+
+
+
+//---------------------------------------------------------------------------------------------
+//RESIZE CHARTS
+const resizeCharts = () =>{
+
+    state.chartCreator.redrawChart(state.dataCollector.dailyWeekly);
+    // state.chartCreator.redrawChart(state.dataCollector.dailyDailyTemp);
+    // state.chartCreator.redrawChart(state.dataCollector.hourlyTemp);
+};
+window.addEventListener('resize', resizeCharts);
+
+//RESIZE SECTION
+const resizeSection = () => {
+    const width = window.innerWidth
+
+    if(width>900){
+        const newWidth = width / 2 - 30;
+        htmlComponents.sections.forEach( (el) =>{
+            el.style.width = `${newWidth}px`;
+        });
+    }
+    if(width<=900){
+        const newWidth = width - 45;
+        htmlComponents.sections.forEach( (el) =>{
+            el.style.width = `${newWidth}px`;
+        });
+    }
+
+    
+
+    // section.style.width = `${width}px`;
+};
+window.addEventListener('resize', resizeSection);
 
 
 
@@ -65,38 +123,6 @@ const showInfo = () => {
 htmlComponents.info.button.addEventListener('click', showInfo);
 
 
-//RESIZE CHARTS
-const resizeCharts = () =>{
-
-    state.chartCreator.redrawChart(state.dataCollector.dailyWeeklyTemp);
-    state.chartCreator.redrawChart(state.dataCollector.dailyDailyTemp);
-    state.chartCreator.redrawChart(state.dataCollector.hourlyTemp);
-};
-window.addEventListener('resize', resizeCharts);
-
-//RESIZE SECTION
-const resizeSection = () => {
-    const width = window.innerWidth
-
-    if(width>900){
-        const newWidth = width / 2 - 30;
-        htmlComponents.sections.forEach( (el) =>{
-            el.style.width = `${newWidth}px`;
-        });
-    }
-    if(width<=900){
-        const newWidth = width - 45;
-        htmlComponents.sections.forEach( (el) =>{
-            el.style.width = `${newWidth}px`;
-        });
-    }
-
-    
-
-    // section.style.width = `${width}px`;
-};
-window.addEventListener('resize', resizeSection);
-
 // window.onload = () => {
 //     setUpMainFooter()
-// }
+// }    

@@ -11,6 +11,7 @@ export default class ChartCreator {
                 div: '#dailyWeekly__chart',
                 paths: [],
                 dots: [],
+                pathsDatajoin: [],
                 timeFormat: '%d.%m',
                 xTicks: 7,
             },
@@ -18,6 +19,7 @@ export default class ChartCreator {
                 div: '#hourly__chart',
                 paths: [],
                 dots: [],
+                pathsDatajoin: [],
                 timeFormat: '%H:%M',
                 xTicks: 12,
             },
@@ -25,6 +27,7 @@ export default class ChartCreator {
                 div: '#dailyDaily__chart',
                 paths: [],
                 dots: [],
+                pathsDatajoin: [],
                 timeFormat: '%d.%m',
                 xTicks: 7,
             }
@@ -41,14 +44,13 @@ export default class ChartCreator {
     renderChart(dataObj){ //param: data obj, first var, secondVar
 
         // console.log(dataObj);
-
         //PREPARE INPUTS FROM OBJECTS
         const { chartType, xLabel, yLabel } = dataObj;
         const { x, y } = dataObj.dataSets[0].setUp[0];
-
+        
         const data = [dataObj.dataSets[0].data, dataObj.dataSets[1].data];
         const setUp = [dataObj.dataSets[0].setUp, dataObj.dataSets[1].setUp];
-
+        
         const { div, timeFormat, xTicks } = this.chartGroups[chartType];
 
         //DATA
@@ -75,7 +77,7 @@ export default class ChartCreator {
              .attr('height', height)
              .append('g')
              .attr("transform", `translate(${margin.left}, ${margin.top})`);
-             
+
              this.chartGroups[chartType].svg = d3.select(`#${chartType}__chartSvg`);                          
         }
 
@@ -86,7 +88,7 @@ export default class ChartCreator {
                 .domain([d3.min(data[0], xValue), d3.max(data[0], xValue)])
                 .range([0, svgWidth])
                 // .nice()
-            
+
             this.chartGroups[chartType].xAxisG = this.chartGroups[chartType].svgG.append('g')
                 .attr('class', 'chartLine__axisLine')
                 .attr('transform', `translate(0, ${svgHeight})`)
@@ -94,7 +96,7 @@ export default class ChartCreator {
                     .ticks(xTicks)
                     .tickFormat(d3.timeFormat(timeFormat))
                     .tickPadding(10));
-                
+
             this.chartGroups[chartType].xAxisG.append('text')
                 .attr('class','chartLine__axisLabel')
                 .attr('x', svgWidth/2)
@@ -131,14 +133,59 @@ export default class ChartCreator {
         {
             data.forEach( (dataset, index) => {
                 this.drawPath(chartType, dataset, setUp[index]);   
-                this.drawDots(chartType, dataset, setUp[index]);
+                // this.drawDots(chartType, dataset, setUp[index]);
             })
         }                                     
+    }
+
+    changeChart(dataObj){
+
+        const { chartType, xLabel, yLabel } = dataObj;
+        const data = [dataObj.dataSets[0].data, dataObj.dataSets[1].data];
+        const setUp = [dataObj.dataSets[0].setUp, dataObj.dataSets[1].setUp];
+
+        // console.log(data);
+        // console.log(setUp);
+
+        const paths = this.chartGroups[chartType].paths
+
+        this.calcXaxis(dataObj)
+
+        data.forEach( (dataset, index) => {
+            this.drawPath(chartType, dataset, setUp[index]);   
+            // this.drawDots(chartType, dataset, setUp[index]);
+        })
+
+
+
+    //     this.chartGroups[chartType].paths.forEach( (path, index) =>{
+
+    //         // console.log(setUp[index]);
+
+    //         const x = setUp[index].x;
+    //         const y = setUp[index].y;
+    //         const xValue =  (d) => d[x];
+    //         const yValue =  (d) => d[y];
+
+
+    //         path
+    //             .datum(data[0])
+    //             .attr("d", d3.line()
+    //                 .x((d) => this.chartGroups[chartType].xScale(xValue(d)))
+    //                 .y((d) => this.chartGroups[chartType].yScale(yValue(d)))
+    //                 .curve(this.chartSettings.lineCurve));
+    // });
+
     }
 
 
     drawPath(chartType, data, setUp){
         //arguments: forWhichChart, data, currentVairables
+        // console.log(data);
+        // console.log(setUp);
+
+        const { paths, pathsDatajoin, xScale, yScale, svgG } = this.chartGroups[chartType];
+
         
         setUp.forEach((el) => {
             const xValue =  (d) => d[x];
@@ -147,21 +194,44 @@ export default class ChartCreator {
             const x = el.x;
             const y = el.y;
             const classLine = el.classLine;
+            const pathNum = paths.length;
+            console.log(pathNum)
 
-            const  pathNum = this.chartGroups[chartType].paths.length;
+            const lineGenerator = d3.line()
+                                        .x(d => xScale(d[x]))
+                                        .y(d => yScale(d[y]))
+                                        .curve(d3.curveCatmullRom.alpha(.5));
 
-            this.chartGroups[chartType].paths[pathNum] = this.chartGroups[chartType].svgG
-                .append('path')
-                    .datum(data)
-                // .attr('class', 'chartLine__mainLine chartLine__mainLine--actual')
-                .attr('class', classLine)
-                .attr("d", d3.line()
-                            .x((d) => this.chartGroups[chartType].xScale(xValue(d)))
-                            .y((d) => this.chartGroups[chartType].yScale(yValue(d)))
-                            .curve(this.chartSettings.lineCurve));
+            pathsDatajoin[pathNum] = svgG.selectAll(`.lineTest${pathNum}`)
+                                                            .data([data]);
 
-            })
 
+            // paths[pathNum] = pathsDatajoin[pathNum]
+            //     .enter()
+            //         .append('path')
+            //         .attr('opacity', 0)
+            //         .attr('class', `${classLine} lineTest${pathNum}`)
+            //     .merge(pathsDatajoin[pathNum])
+            //         .transition()
+            //         .duration(1000)   
+            //         .attr('opacity', 1)
+            //         .attr("d", lineGenerator(data));
+            
+
+
+            paths[pathNum] = pathsDatajoin[pathNum]
+                .enter()
+                    .append('path');
+            paths[pathNum]
+                    .attr('opacity', 0)
+                    .attr('class', `${classLine} lineTest${pathNum}`)
+                .merge(pathsDatajoin[pathNum])
+                    .transition()
+                    .duration(1000)   
+                    .attr('opacity', 1)
+                    .attr("d", lineGenerator(data));
+
+        })
     }
 
     drawDots(chartType, data, setUp){
@@ -260,6 +330,32 @@ export default class ChartCreator {
 
     }
 
+    calcXaxis(dataObj){
+
+        const { chartType } = dataObj;
+
+        const { div, timeFormat, xTicks, xScale, xAxisG } = this.chartGroups[chartType];
+        const { height } = document.querySelector(div).getBoundingClientRect()
+        const margin = this.chartSettings.margins;
+        const svgHeight = height - margin.top - margin.bottom;
+
+        const data = [dataObj.dataSets[0].data, dataObj.dataSets[1].data];
+        const { x } = dataObj.dataSets[0].setUp[0];
+        const xValue =  (d) => d[x];
+
+
+        xScale.domain([d3.min(data[0], xValue), d3.max(data[0], xValue)])
+
+        xAxisG
+            // .transition()
+            //     .duration(1000)
+            .attr('transform', `translate(0, ${svgHeight})`)
+            .call(d3.axisBottom(xScale)
+                .ticks(xTicks)
+                .tickFormat(d3.timeFormat(timeFormat))
+                .tickPadding(10));
+
+    }
 
     calcMinValue(datasets, setUp){
 
@@ -290,7 +386,6 @@ export default class ChartCreator {
         });
         return d3.max(datasetsValues);
     }
-
 
     renderChartTwo(chartType, data, x, y){ //param: data obj, first var, secondVar
 

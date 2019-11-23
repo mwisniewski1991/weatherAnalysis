@@ -11,6 +11,9 @@ export const htmlComponents = {
     dailyWeekly: {
         section: document.querySelector('#dailyWekklySection'),
         chart: document.querySelector('#dailyWeekly__chart'),
+        buttonLessWeeks: document.querySelector("#dailyWeeklyLessWeeks"),
+        buttonMoreWeeks: document.querySelector("#dailyWeeklyMoreWeeks"),
+        buttonsWeeks: Array.from(document.querySelectorAll(".dailyWeeklyWeeks"))
     },
     hourly: {
         chart: document.querySelector('#hourly__chart'),

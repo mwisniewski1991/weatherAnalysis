@@ -7,22 +7,23 @@ const moment = require('moment');
 export default class DataCollector{
 
     constructor(){
-        this.dailyWeeklyTemp = {
+        this.dailyWeekly = {
             chartType: 'dailyWeeklyChart',
             xLabel: 'Time',
             yLabel: 'Temperature',
+            weeksNum: 1,
             dataSets: [
                 {   data: {},
                     setUp: [
                         {x: 'time', y:'temperatureMin', classLine:'chartLine__mainLine chartLine__mainLine--actualMin', classDots: 'chartLine__mainDott chartLine__mainDott--actualMin'},
-                        {x: 'time', y:'temperatureMax', classLine:'chartLine__mainLine chartLine__mainLine--actualMax', classDots: 'chartLine__mainDott chartLine__mainDott--actualMax'}
+                        // {x: 'time', y:'temperatureMax', classLine:'chartLine__mainLine chartLine__mainLine--actualMax', classDots: 'chartLine__mainDott chartLine__mainDott--actualMax'}
                     ]
                 },
                 {
                     data: {},
                     setUp: [
                         {x: 'time', y:'temperatureMin', classLine:'chartLine__mainLine chartLine__mainLine--forecastMin', classDots: 'chartLine__mainDott chartLine__mainDott--forecastMin'},
-                        {x: 'time', y:'temperatureMax', classLine:'chartLine__mainLine chartLine__mainLine--forecastMax', classDots: 'chartLine__mainDott chartLine__mainDott--forecastMax'}
+                        // {x: 'time', y:'temperatureMax', classLine:'chartLine__mainLine chartLine__mainLine--forecastMax', classDots: 'chartLine__mainDott chartLine__mainDott--forecastMax'}
                     ]
                 }
             ]
@@ -67,25 +68,35 @@ export default class DataCollector{
     }
 
 
-    loadDataFile(){
+    loadDailyWeeklyData(weeks){
 
+        // dailySummarise.forEach(el => {
+        //     el.time = el.time * 1000; //MODIFY 
+        //     // console.log(moment(el.time).format('YYYY.MM.DD HH:MM'));
+        // });
 
+        // dailyForecastWeekly.forEach(el => {
+        //     el.time = el.time * 1000; //MODIFY 
+        //     // console.log(moment(el.time).format('YYYY.MM.DD HH:MM'));
+        // })
 
+        const countDays = weeks * 7;
+
+        //dailyWeeklyTemp
+        this.dailyWeekly.dataSets[0].data = dailySummarise.slice(0,countDays)
+        this.dailyWeekly.dataSets[1].data = dailyForecastWeekly.slice(0,countDays)
     }
 
-    loadDailyWeeklyData(week){
+
+
+
+
+
+
+
+    loadData(week){
         //DEV MODE FROM FILE - LATER FROM SERVER
 
-        dailyForecastWeekly.forEach(el => {
-            el.time = el.time * 1000; //MODIFY 
-            // console.log(moment(el.time).format('YYYY.MM.DD HH:MM'));
-        })
-
-        dailySummarise.forEach(el => {
-            el.time = el.time * 1000; //MODIFY 
-            // console.log(moment(el.time).format('YYYY.MM.DD HH:MM'));
-        });
-        
         currentWeather.forEach(el => {
             el.time = el.time * 1000; //MODIFY 
             // console.log(moment(el.time).format('YYYY.MM.DD HH:MM'));
@@ -96,14 +107,8 @@ export default class DataCollector{
             // console.log(moment(el.time).format('YYYY.MM.DD HH:MM'));
         });
 
-
-
         
-        //dailyWeeklyTemp
-        this.dailyWeeklyTemp.dataSets[0].data = dailySummarise;
-        this.dailyWeeklyTemp.dataSets[1].data = dailyForecastWeekly;
-
-        // dailyDailyTemp
+        
         this.dailyDailyTemp.dataSets[0].data = dailySummarise;
         this.dailyDailyTemp.dataSets[1].data = dailyForecastWeekly;
 
