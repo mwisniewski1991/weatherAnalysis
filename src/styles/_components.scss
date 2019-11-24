@@ -69,25 +69,82 @@
     padding: 5px;
 
     &__title{
-        height: 15%;
+        height: 13%;
         width: 100%;
+        margin-bottom: .5rem;
         text-align: center;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }   
 
     &__controller{
-        height: 10%;
+        height: 12%;
 
         display: flex;
         justify-content: space-around;
     }
 
-    &__button{
-        width: 40%;
-    }
-
     &__chart{
+        position: relative;
         height: 75%;
     }
+
+    &__module{
+        display: flex;
+        justify-content: space-around;
+
+        &--time{
+            width: 50%;
+        }
+    
+        &--var{
+            width: 30%;
+        }
+    
+        &--info{
+            width: 20%;
+        }
+
+    }
+    
+    &__chartInfo{
+        position: absolute;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: 98%;
+    }
+
+    &__button{
+        width: 40%;
+        height: 4rem;   
+    }
+}
+
+
+.chartInfo {
+    padding: 1.5rem;
+
+    background-color: rgba($colorBlack, .85);
+    box-shadow: 0 0 2px 1px rgba($colorBlack, .85);
+
+    opacity: 1;
+    transition: opacity .2s ease-in;
+
+    &--hide{
+        opacity: 0;
+    }
+
+    &--hideHard{
+        visibility: hidden;
+    }
+
+    &__paragraph{
+        font-size: 1.3rem;
+    }
+
 }
 
 

@@ -16,14 +16,14 @@ export default class DataCollector{
                 {   data: {},
                     setUp: [
                         {x: 'time', y:'temperatureMin', classLine:'chartLine__mainLine chartLine__mainLine--actualMin', classDots: 'chartLine__mainDott chartLine__mainDott--actualMin'},
-                        // {x: 'time', y:'temperatureMax', classLine:'chartLine__mainLine chartLine__mainLine--actualMax', classDots: 'chartLine__mainDott chartLine__mainDott--actualMax'}
+                        {x: 'time', y:'temperatureMax', classLine:'chartLine__mainLine chartLine__mainLine--actualMax', classDots: 'chartLine__mainDott chartLine__mainDott--actualMax'}
                     ]
                 },
                 {
                     data: {},
                     setUp: [
                         {x: 'time', y:'temperatureMin', classLine:'chartLine__mainLine chartLine__mainLine--forecastMin', classDots: 'chartLine__mainDott chartLine__mainDott--forecastMin'},
-                        // {x: 'time', y:'temperatureMax', classLine:'chartLine__mainLine chartLine__mainLine--forecastMax', classDots: 'chartLine__mainDott chartLine__mainDott--forecastMax'}
+                        {x: 'time', y:'temperatureMax', classLine:'chartLine__mainLine chartLine__mainLine--forecastMax', classDots: 'chartLine__mainDott chartLine__mainDott--forecastMax'}
                     ]
                 }
             ]

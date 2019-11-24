@@ -35,8 +35,9 @@ console.log(state.chartCreator);
 appCtrl();
 
 
-//CHANGE DAILYWEEKLY DATA
 
+//---------------------------------------------------------------------------------------------
+//CHANGE DAILYWEEKLY DATA
 const changeWeeklyDailyData = (e) => {
 
     const weeksNum = state.dataCollector.dailyWeekly.weeksNum;
@@ -56,8 +57,6 @@ const changeWeeklyDailyData = (e) => {
 htmlComponents.dailyWeekly.buttonsWeeks.forEach((button) => {
     button.addEventListener('click', changeWeeklyDailyData)
 });
-
-
 
 //---------------------------------------------------------------------------------------------
 //RESIZE CHARTS
@@ -92,8 +91,7 @@ const resizeSection = () => {
 };
 window.addEventListener('resize', resizeSection);
 
-
-
+//---------------------------------------------------------------------------------------------
 //INFO BOX FUCNTION
 const setUpMainFooter = () => {
 
@@ -121,6 +119,26 @@ const showInfo = () => {
 };
 //EVENST LISTENNERS
 htmlComponents.info.button.addEventListener('click', showInfo);
+
+
+//---------------------------------------------------------------------------------------------
+//SHOW CHART INFO
+const showChartInfo = (e) =>{
+
+    const parent = e.target.parentNode.parentNode.parentNode;
+    const chartInfo = parent.querySelector('.block__chartInfo');
+
+    chartInfo.classList.toggle('chartInfo--hide');
+
+};
+
+
+htmlComponents.chartInfo.buttons.forEach((el)=>{
+    el.addEventListener('click', showChartInfo);
+})
+
+
+
 
 
 // window.onload = () => {
