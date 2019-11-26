@@ -50,6 +50,9 @@ export default class ChartCreator {
         
         const data = [dataObj.dataSets[0].data, dataObj.dataSets[1].data];
         const setUp = [dataObj.dataSets[0].setUp, dataObj.dataSets[1].setUp];
+
+        // console.log(data)
+        // console.log(setUp)
         
         const { div, timeFormat, xTicks } = this.chartGroups[chartType];
 
@@ -131,10 +134,30 @@ export default class ChartCreator {
                                             
         //LINE, DOTS      
         {
-            data.forEach( (dataset, index) => {
-                this.drawPath(chartType, dataset, setUp[index]);   
-                // this.drawDots(chartType, dataset, setUp[index]);
-            })
+
+            // this.drawPath(chartType, data[0], setUp[0], 0);   
+            // this.drawPath(chartType, data[1], setUp[1], 1);   
+
+            //HOW MANY PATHS 
+            const numOfPaths = setUp[0].length + setUp[1].length;
+            const setUpTEST = [...dataObj.dataSets[0].setUp, ...dataObj.dataSets[1].setUp];
+
+
+            for(let i=0 ; i<numOfPaths; i++){
+
+                console.log(i);
+
+                const helpNumber = numOfPaths / 2;
+                const whichData = i < helpNumber ? 0 : 1;
+
+                this.drawPath(chartType, data[whichData], setUpTEST[i], i);   
+                 
+            }
+
+            // data.forEach( (dataset, index) => {
+            //     this.drawPath(chartType, dataset, setUp[index]);   
+            //     // this.drawDots(chartType, dataset, setUp[index]);
+            // })
         }                                     
     }
 
@@ -151,67 +174,56 @@ export default class ChartCreator {
 
         this.calcXaxis(dataObj);
 
-        // this.redrawPath(dataObj);
-        const numExistPath = paths.length;
 
+        //HOW MANY PATHS 
+        const numOfPaths = setUp[0].length + setUp[1].length;
+        const setUpTEST = [...dataObj.dataSets[0].setUp, ...dataObj.dataSets[1].setUp];
 
-        data.forEach( (dataset, index) => {
-            this.drawPath(chartType, dataset, setUp[index], numExistPath);   
-            // this.drawDots(chartType, dataset, setUp[index]);
-        })
+        for(let i=0 ; i<numOfPaths; i++){
 
+            const helpNumber = numOfPaths / 2;
+            const whichData = i < helpNumber ? 0 : 1;
+
+            this.drawPath(chartType, data[whichData], setUpTEST[i], i);   
+             
+        }
+
+        // data.forEach( (dataset, index) => {
+        //     this.drawPath(chartType, dataset, setUp[index], numExistPath);   
+        //     // this.drawDots(chartType, dataset, setUp[index]);
+        // })
     }
 
 
-    drawPath(chartType, data, setUp, numExistPath = 0){
+    drawPath(chartType, data, setUp, pathNum){
         //arguments: forWhichChart, data, currentVairables
         // console.log(data);
         // console.log(setUp);
 
-        const { paths, pathsDatajoin, xScale, yScale, svgG } = this.chartGroups[chartType];
 
-        
-        setUp.forEach((el) => {
+        const { paths, pathsDatajoin, xScale, yScale, svgG } = this.chartGroups[chartType];
 
             const xValue =  (d) => d[x];
             const yValue =  (d) => d[y];
 
-            const x = el.x;
-            const y = el.y;
-            const classLine = el.classLine;
+            const x = setUp.x;
+            const y = setUp.y;
+            const classLine = setUp.classLine;
 
             const lineGenerator = d3.line()
                                         .x(d => xScale(d[x]))
                                         .y(d => yScale(d[y]))
                                         .curve(d3.curveCatmullRom.alpha(.5));
             
-            const pathNum = paths.length;
-
-            // console.log(`paths.length ${paths.length}`);
-            // console.log(`numExistPath: ${numExistPath}`);
-            // console.log(`pathNum: ${pathNum}`);
-            
-
             pathsDatajoin[pathNum] = svgG.selectAll(`.lineTest${pathNum}`)
                                                             .data([data]);
 
-
-            // paths[pathNum] = pathsDatajoin[pathNum]
-            //     .enter()
-            //         .append('path')
-            //         .attr('opacity', 0)
-            //         .attr('class', `${classLine} lineTest${pathNum}`)
-            //     .merge(pathsDatajoin[pathNum])
-            //         .transition()
-            //         .duration(1000)   
-            //         .attr('opacity', 1)
-            //         .attr("d", lineGenerator(data));
-            
 
 
             paths[pathNum] = pathsDatajoin[pathNum]
                 .enter()
                     .append('path');
+            
             paths[pathNum]
                     .attr('opacity', 0)
                     .attr('class', `${classLine} lineTest${pathNum}`)
@@ -221,7 +233,22 @@ export default class ChartCreator {
                     .attr('opacity', 1)
                     .attr("d", lineGenerator(data));
 
-        })
+            // console.log(paths[pathNum]);
+
+                
+        // paths[pathNum] = pathsDatajoin[pathNum]
+        //     .enter()
+        //         .append('path')
+        //         .attr('opacity', 0)
+        //         .attr('class', `${classLine} lineTest${pathNum}`)
+        //     .merge(pathsDatajoin[pathNum])
+        //         .transition()
+        //         .duration(1000)   
+        //         .attr('opacity', 1)
+        //         .attr("d", lineGenerator(data));
+        
+
+
     }
 
     drawDots(chartType, data, setUp){
@@ -342,6 +369,8 @@ export default class ChartCreator {
                     const xValue =  (d) => d[x];
                     const yValue =  (d) => d[y];
 
+                console.log(path);
+
                 path
                     .attr("d", d3.line()
                     .x((d) => this.chartGroups[chartType].xScale(xValue(d)))
@@ -349,17 +378,17 @@ export default class ChartCreator {
                     .curve(this.chartSettings.lineCurve));
             });
 
-            this.chartGroups[chartType].dots.forEach( (dot, index) =>{
+            // this.chartGroups[chartType].dots.forEach( (dot, index) =>{
 
-                    const x = setUp[index].x;
-                    const y = setUp[index].y;
-                    const xValue =  (d) => d[x];
-                    const yValue =  (d) => d[y];
+            //         const x = setUp[index].x;
+            //         const y = setUp[index].y;
+            //         const xValue =  (d) => d[x];
+            //         const yValue =  (d) => d[y];
 
-                    dot
-                    .attr("cx", (d) => this.chartGroups[chartType].xScale(xValue(d)))
-                    .attr("cy", (d) => this.chartGroups[chartType].yScale(yValue(d)))
-            });
+            //         dot
+            //         .attr("cx", (d) => this.chartGroups[chartType].xScale(xValue(d)))
+            //         .attr("cy", (d) => this.chartGroups[chartType].yScale(yValue(d)))
+            // });
 
     }
 
@@ -419,6 +448,8 @@ export default class ChartCreator {
         return d3.max(datasetsValues);
     }
 
+
+    //TO DELETE
     renderChartTwo(chartType, data, x, y){ //param: data obj, first var, secondVar
 
         
@@ -516,6 +547,60 @@ export default class ChartCreator {
                 this.drawDots(chartType, dataset, {x, y});
             })
         }                                     
+    }
+
+    drawPathTwo(chartType, data, setUp){
+        //arguments: forWhichChart, data, currentVairables
+        // console.log(data);
+        // console.log(setUp);
+
+        const { paths, pathsDatajoin, xScale, yScale, svgG } = this.chartGroups[chartType];
+
+        
+        setUp.forEach((el) => {
+
+            const xValue =  (d) => d[x];
+            const yValue =  (d) => d[y];
+
+            const x = el.x;
+            const y = el.y;
+            const classLine = el.classLine;
+
+            const lineGenerator = d3.line()
+                                        .x(d => xScale(d[x]))
+                                        .y(d => yScale(d[y]))
+                                        .curve(d3.curveCatmullRom.alpha(.5));
+            
+            const pathNum = paths.length;
+
+            pathsDatajoin[pathNum] = svgG.selectAll(`.lineTest${pathNum}`)
+                                                            .data([data]);
+
+            
+            paths[pathNum] = pathsDatajoin[pathNum]
+            .enter()
+            .append('path');
+            paths[pathNum]
+            .attr('opacity', 0)
+            .attr('class', `${classLine} lineTest${pathNum}`)
+            .merge(pathsDatajoin[pathNum])
+            .transition()
+            .duration(1000)   
+            .attr('opacity', 1)
+            .attr("d", lineGenerator(data));
+            
+            // paths[pathNum] = pathsDatajoin[pathNum]
+            //     .enter()
+            //         .append('path')
+            //         .attr('opacity', 0)
+            //         .attr('class', `${classLine} lineTest${pathNum}`)
+            //     .merge(pathsDatajoin[pathNum])
+            //         .transition()
+            //         .duration(1000)   
+            //         .attr('opacity', 1)
+            //         .attr("d", lineGenerator(data));
+                                                            
+        })
     }
 
 }
