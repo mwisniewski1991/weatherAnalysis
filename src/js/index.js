@@ -21,11 +21,11 @@ await state.dataCollector.loadData(1); //data
 await state.dataCollector.loadDailyWeeklyData(1);
 
 state.chartCreator.renderChart(state.dataCollector.dailyWeekly);
-// state.chartCreator.renderChart(state.dataCollector.dailyDailyTemp);
-// state.chartCreator.renderChart(state.dataCollector.hourlyTemp);
+state.chartCreator.renderChart(state.dataCollector.dailyDailyTemp);
+state.chartCreator.renderChart(state.dataCollector.hourlyTemp);
+
 
 // state.chartCreator.renderChart('dailyDailyChart', [dailyWeekklyData, dailyWeekklyDataTwo], 'time', 'temperatureMin');
-
 // state.chartCreator.renderChart('hourlyChart', [dailyWeekklyData, dailyWeekklyDataTwo], 'time', 'temperatureMin');
 
 
@@ -63,8 +63,8 @@ htmlComponents.dailyWeekly.buttonsWeeks.forEach((button) => {
 const resizeCharts = () =>{
 
     state.chartCreator.redrawChart(state.dataCollector.dailyWeekly);
-    // state.chartCreator.redrawChart(state.dataCollector.dailyDailyTemp);
-    // state.chartCreator.redrawChart(state.dataCollector.hourlyTemp);
+    state.chartCreator.redrawChart(state.dataCollector.dailyDailyTemp);
+    state.chartCreator.redrawChart(state.dataCollector.hourlyTemp);
 };
 window.addEventListener('resize', resizeCharts);
 
