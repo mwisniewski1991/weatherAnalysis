@@ -2,8 +2,9 @@ import '../styles/main.scss'; //IMPORT SASS
 import 'babel-polyfill'; //IMPORT BABEL FOR ASYNC/AWAIT
 import { htmlComponents } from './base';
 import DataCollector from './apidata/data';
-import ChartCreator from './charts/chart'
-
+import ChartCreator from './charts/chart';
+import { TimelineMax } from 'gsap';
+import { async } from 'q';
 
 const state = {};
 
@@ -16,13 +17,13 @@ state.chartCreator = new ChartCreator;
 
 
 //DAILY WEEKLY
-await state.dataCollector.loadData(1); //data
+await state.dataCollector.loadDataTest(1); //data
 
-await state.dataCollector.loadDailyWeeklyData(1);
+await state.dataCollector.loadData('dailyWeekly',1);
 
 state.chartCreator.renderChart(state.dataCollector.dailyWeekly);
-// state.chartCreator.renderChart(state.dataCollector.dailyDailyTemp);
-// state.chartCreator.renderChart(state.dataCollector.hourlyTemp);
+state.chartCreator.renderChart(state.dataCollector.dailyDailyTemp);
+state.chartCreator.renderChart(state.dataCollector.hourlyTemp);
 
 
 // state.chartCreator.renderChart('dailyDailyChart', [dailyWeekklyData, dailyWeekklyDataTwo], 'time', 'temperatureMin');
@@ -38,19 +39,19 @@ appCtrl();
 
 //---------------------------------------------------------------------------------------------
 //CHANGE DAILYWEEKLY DATA
-const changeWeeklyDailyData = (e) => {
+const changeWeeklyDailyData = async (e) => {
 
     const weeksNum = state.dataCollector.dailyWeekly.weeksNum;
     const weeksCalc =  weeksNum + parseInt(e.target.value);
-    
+    const chartType = e.target.id;
 
     if(weeksCalc > 0 && weeksCalc<4){
         state.dataCollector.dailyWeekly.weeksNum = weeksCalc;
     };
 
-    state.dataCollector.loadDailyWeeklyData(state.dataCollector.dailyWeekly.weeksNum);
-    state.chartCreator.changeChart(state.dataCollector.dailyWeekly);
+    await state.dataCollector.loadData('dailyWeekly', state.dataCollector.dailyWeekly.weeksNum);
 
+    state.chartCreator.changeChart(state.dataCollector.dailyWeekly);
 
 };
 
@@ -65,6 +66,7 @@ const resizeCharts = () =>{
     state.chartCreator.redrawChart(state.dataCollector.dailyWeekly);
     state.chartCreator.redrawChart(state.dataCollector.dailyDailyTemp);
     state.chartCreator.redrawChart(state.dataCollector.hourlyTemp);
+    
 };
 window.addEventListener('resize', resizeCharts);
 
@@ -128,7 +130,23 @@ const showChartInfo = (e) =>{
     const parent = e.target.parentNode.parentNode.parentNode;
     const chartInfo = parent.querySelector('.block__chartInfo');
 
+    const tl = new TimelineMax();
+    if(Array.from(chartInfo.classList).includes('chartInfo--hide')){
+        tl
+        .to(chartInfo, .1, {borderRadius: 50, opacity: 1, visibility: 'visible'})
+        .to(chartInfo, {scaleX: 1, scaleY: .02})
+        .to(chartInfo, {scaleX: 1, scaleY: 1})
+
+        chartInfo.classList.toggle('chartInfo--hide');
+    }else{
+        tl
+        .to(chartInfo, {scaleX: 1, scaleY: .02})
+        .to(chartInfo, {scaleX: 0, scaleY: .0})
+        .to(chartInfo, {borderRadius: 50, visibility: 'hidden'})
+
     chartInfo.classList.toggle('chartInfo--hide');
+
+    }
 
 };
 

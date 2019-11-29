@@ -16,14 +16,20 @@ export default class DataCollector{
                 {   data: {},
                     setUp: [
                         {x: 'time', y:'temperatureMin', classLine:'chartLine__mainLine chartLine__mainLine--actualMin', classDots: 'chartLine__mainDott chartLine__mainDott--actualMin'},
-                        // {x: 'time', y:'temperatureMax', classLine:'chartLine__mainLine chartLine__mainLine--actualMax', classDots: 'chartLine__mainDott chartLine__mainDott--actualMax'}
+                        {x: 'time', y:'temperatureMax', classLine:'chartLine__mainLine chartLine__mainLine--actualMax', classDots: 'chartLine__mainDott chartLine__mainDott--actualMax'}
+                        // {x: 'time', y:'pressureAvg', classLine:'chartLine__mainLine chartLine__mainLine--actual', classDots: 'chartLine__mainDott chartLine__mainDott--actual'},
+                        // {x: 'time', y:'humidityAvg', classLine:'chartLine__mainLine chartLine__mainLine--actual', classDots: 'chartLine__mainDott chartLine__mainDott--actual'},
+                        // {x: 'time', y:'cloudCoverAvg', classLine:'chartLine__mainLine chartLine__mainLine--actual', classDots: 'chartLine__mainDott chartLine__mainDott--actual'},
                     ]
                 },
                 {
                     data: {},
                     setUp: [
                         {x: 'time', y:'temperatureMin', classLine:'chartLine__mainLine chartLine__mainLine--forecastMin', classDots: 'chartLine__mainDott chartLine__mainDott--forecastMin'},
-                        // {x: 'time', y:'temperatureMax', classLine:'chartLine__mainLine chartLine__mainLine--forecastMax', classDots: 'chartLine__mainDott chartLine__mainDott--forecastMax'}
+                        {x: 'time', y:'temperatureMax', classLine:'chartLine__mainLine chartLine__mainLine--forecastMax', classDots: 'chartLine__mainDott chartLine__mainDott--forecastMax'}
+                        // {x: 'time', y:'pressure', classLine:'chartLine__mainLine chartLine__mainLine--forecast', classDots: 'chartLine__mainDott chartLine__mainDott--forecast'},
+                        // {x: 'time', y:'humidity', classLine:'chartLine__mainLine chartLine__mainLine--forecast', classDots: 'chartLine__mainDott chartLine__mainDott--forecast'},
+                        // {x: 'time', y:'cloudCover', classLine:'chartLine__mainLine chartLine__mainLine--forecast', classDots: 'chartLine__mainDott chartLine__mainDott--forecast'},
                     ]
                 }
             ]
@@ -70,10 +76,13 @@ export default class DataCollector{
 
     loadDailyWeeklyData(weeks){
 
-        // dailySummarise.forEach(el => {
-        //     el.time = el.time * 1000; //MODIFY 
-        //     // console.log(moment(el.time).format('YYYY.MM.DD HH:MM'));
-        // });
+        dailySummarise.forEach(el => {
+            // el.time = el.time * 1000; //MODIFY 
+            el.cloudCoverAvg = +el.cloudCoverAvg; 
+            el.humidityAvg = +el.humidityAvg; 
+            el.pressureAvg = +el.pressureAvg; 
+            // console.log(moment(el.time).format('YYYY.MM.DD HH:MM'));
+        });
 
         // dailyForecastWeekly.forEach(el => {
         //     el.time = el.time * 1000; //MODIFY 
@@ -87,14 +96,31 @@ export default class DataCollector{
         this.dailyWeekly.dataSets[1].data = dailyForecastWeekly.slice(0,countDays)
     }
 
+    loadData(chartType, weeks){
+
+        dailySummarise.forEach(el => {
+            // el.time = el.time * 1000; //MODIFY 
+            el.cloudCoverAvg = +el.cloudCoverAvg; 
+            el.humidityAvg = +el.humidityAvg; 
+            el.pressureAvg = +el.pressureAvg; 
+            // console.log(moment(el.time).format('YYYY.MM.DD HH:MM'));
+        });
+
+        // dailyForecastWeekly.forEach(el => {
+        //     el.time = el.time * 1000; //MODIFY 
+        //     // console.log(moment(el.time).format('YYYY.MM.DD HH:MM'));
+        // })
+
+        const countDays = weeks * 7;
+
+        //dailyWeeklyTemp
+        this.dailyWeekly.dataSets[0].data = dailySummarise.slice(0,countDays)
+        this.dailyWeekly.dataSets[1].data = dailyForecastWeekly.slice(0,countDays)
+
+    }
 
 
-
-
-
-
-
-    loadData(week){
+    loadDataTest(week){
         //DEV MODE FROM FILE - LATER FROM SERVER
 
         currentWeather.forEach(el => {

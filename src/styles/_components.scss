@@ -124,23 +124,16 @@
 }
 
 .chartInfo {
+    visibility: hidden;
     padding: 1.5rem;
 
     background-color: rgba($colorBlack, .85);
     box-shadow: 0 0 2px 1px rgba($colorBlack, .85);
     transition: opacity .2s ease-in;
     opacity: 0;
-
-    // transform: scale(0,0);
-    // animation: showChartInfoTwo 1.5s forwards;
+    transform: scale(0,0);
     
     &--hide{
-        // animation: showChartInfo 1.5s forwards;
-        opacity: 1;
-    }
-
-    &--hideHard{
-        visibility: hidden;
     }
 
     &__paragraph{
