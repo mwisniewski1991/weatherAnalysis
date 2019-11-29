@@ -2,16 +2,31 @@ import { dailyForecastWeekly } from './dailyForecastWeekly'; //TEST
 import { dailySummarise } from './dailySummarise'; //TEST
 import { currentWeather } from './currentWeather'; //TEST
 import { hourlyForecast } from './hourlyForecast'; //TEST
+import { async } from 'q';
 const moment = require('moment');
 
 export default class DataCollector{
 
     constructor(){
+
+        this.testData = {
+            dataSets: [
+                {   data: {},
+               
+                },
+                {
+                    data: {},
+                }
+            ]
+        }
+
         this.dailyWeekly = {
             chartType: 'dailyWeeklyChart',
             xLabel: 'Time',
             yLabel: 'Temperature',
             weeksNum: 1,
+            routes: ['dailySummarise', 'dailyForecastWeekly'],
+            // routes: ['dailySummarise'],
             dataSets: [
                 {   data: {},
                     setUp: [
@@ -73,29 +88,25 @@ export default class DataCollector{
         }
     }
 
+    async loadApi(chartType, timeCounters){
 
-    loadDailyWeeklyData(weeks){
+        const routes = this[chartType].routes;
+        
+        routes.forEach(async (route, index) => {
 
-        dailySummarise.forEach(el => {
-            // el.time = el.time * 1000; //MODIFY 
-            el.cloudCoverAvg = +el.cloudCoverAvg; 
-            el.humidityAvg = +el.humidityAvg; 
-            el.pressureAvg = +el.pressureAvg; 
-            // console.log(moment(el.time).format('YYYY.MM.DD HH:MM'));
-        });
+            const apiURL = `/${route}/${timeCounters}`;
 
-        // dailyForecastWeekly.forEach(el => {
-        //     el.time = el.time * 1000; //MODIFY 
-        //     // console.log(moment(el.time).format('YYYY.MM.DD HH:MM'));
-        // })
+            const response = await fetch(apiURL);
+            const data = await response.json();
 
-        const countDays = weeks * 7;
+    
+            console.log(data);
 
-        //dailyWeeklyTemp
-        this.dailyWeekly.dataSets[0].data = dailySummarise.slice(0,countDays)
-        this.dailyWeekly.dataSets[1].data = dailyForecastWeekly.slice(0,countDays)
+            this.testData.dataSets[index].data = data;
+        })
+
     }
-
+   
     loadData(chartType, weeks){
 
         dailySummarise.forEach(el => {
@@ -117,6 +128,28 @@ export default class DataCollector{
         this.dailyWeekly.dataSets[0].data = dailySummarise.slice(0,countDays)
         this.dailyWeekly.dataSets[1].data = dailyForecastWeekly.slice(0,countDays)
 
+    }
+
+    loadDailyWeeklyData(weeks){
+
+        dailySummarise.forEach(el => {
+            // el.time = el.time * 1000; //MODIFY 
+            el.cloudCoverAvg = +el.cloudCoverAvg; 
+            el.humidityAvg = +el.humidityAvg; 
+            el.pressureAvg = +el.pressureAvg; 
+            // console.log(moment(el.time).format('YYYY.MM.DD HH:MM'));
+        });
+
+        // dailyForecastWeekly.forEach(el => {
+        //     el.time = el.time * 1000; //MODIFY 
+        //     // console.log(moment(el.time).format('YYYY.MM.DD HH:MM'));
+        // })
+
+        const countDays = weeks * 7;
+
+        //dailyWeeklyTemp
+        this.dailyWeekly.dataSets[0].data = dailySummarise.slice(0,countDays)
+        this.dailyWeekly.dataSets[1].data = dailyForecastWeekly.slice(0,countDays)
     }
 
 

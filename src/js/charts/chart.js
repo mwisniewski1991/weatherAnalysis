@@ -47,15 +47,18 @@ export default class ChartCreator {
 
     renderChart(dataObj){ //param: data obj, first var, secondVar
 
-        // console.log(dataObj);
+        // console.log(dataObj.dataSets);
         //PREPARE INPUTS FROM OBJECTS
         const { chartType, xLabel, yLabel } = dataObj;
         const { x, y } = dataObj.dataSets[0].setUp[0];
         
         const data = [dataObj.dataSets[0].data, dataObj.dataSets[1].data];
         const setUp = [dataObj.dataSets[0].setUp, dataObj.dataSets[1].setUp];
-
-        // console.log(data)
+        
+        // console.log("------------------")
+        // console.log(dataObj.dataSets)
+        // console.log(dataObj.dataSets[0])
+        // console.log(dataObj.dataSets[0].data)
         // console.log(setUp)
         
         const { div, timeFormat, xTicks } = this.chartGroups[chartType];
@@ -357,6 +360,7 @@ export default class ChartCreator {
         const datasetsValues = [];
 
         datasets.forEach((data,index) => {
+
 
             setUp[index].forEach((el) => {
                 

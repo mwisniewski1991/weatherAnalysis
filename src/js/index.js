@@ -16,10 +16,16 @@ state.dataCollector = new DataCollector;
 state.chartCreator = new ChartCreator;
 
 
+await state.dataCollector.loadApi('dailyWeekly', 1);
+await state.dataCollector.loadData('dailyWeekly',1);
+
+console.log(state.dataCollector.testData.dataSets);
+console.log(state.dataCollector.dailyWeekly.dataSets);
+
+
 //DAILY WEEKLY
 await state.dataCollector.loadDataTest(1); //data
 
-await state.dataCollector.loadData('dailyWeekly',1);
 
 state.chartCreator.renderChart(state.dataCollector.dailyWeekly);
 state.chartCreator.renderChart(state.dataCollector.dailyDailyTemp);
@@ -30,8 +36,7 @@ state.chartCreator.renderChart(state.dataCollector.hourlyTemp);
 // state.chartCreator.renderChart('hourlyChart', [dailyWeekklyData, dailyWeekklyDataTwo], 'time', 'temperatureMin');
 
 
-// console.log(state.dataCollector);
-console.log(state.chartCreator);
+// console.log(state.chartCreator);
 }
 appCtrl();
 
