@@ -12,12 +12,16 @@ export const htmlComponents = {
         buttons: Array.from(document.querySelectorAll('.block__button--info')),
         chartInfoBox: Array.from(document.querySelectorAll('.block__chartInfo')),
     },
+    changeVar: {
+        buttons: Array.from(document.querySelectorAll('.block__button--vars')),
+    },
     dailyWeekly: {
         section: document.querySelector('#dailyWekklySection'),
         chart: document.querySelector('#dailyWeekly__chart'),
         buttonLessWeeks: document.querySelector("#dailyWeeklyLessWeeks"),
         buttonMoreWeeks: document.querySelector("#dailyWeeklyMoreWeeks"),
-        buttonsWeeks: Array.from(document.querySelectorAll(".block__button--changeTime"))
+        buttonsWeeks: Array.from(document.querySelectorAll(".block__button--changeTime")),
+        radioBox: document.querySelector('#dailyWeekly__chartRadiobox'),
     },
     hourly: {
         chart: document.querySelector('#hourly__chart'),

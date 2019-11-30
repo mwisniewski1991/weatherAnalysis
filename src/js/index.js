@@ -1,10 +1,11 @@
 import '../styles/main.scss'; //IMPORT SASS
 import 'babel-polyfill'; //IMPORT BABEL FOR ASYNC/AWAIT
-import { htmlComponents } from './base';
 import DataCollector from './apidata/data';
 import ChartCreator from './charts/chart';
+import * as ui from './UI/ui';
+import { htmlComponents } from './UI/base';
 import { TimelineMax } from 'gsap';
-import { async } from 'q';
+import { stat } from 'fs';
 
 const state = {};
 
@@ -16,13 +17,11 @@ state.dataCollector = new DataCollector;
 state.chartCreator = new ChartCreator;
 
 
-await state.dataCollector.loadApi('dailyWeekly', 1);
+// await state.dataCollector.loadApi('dailyWeekly', 1);
 await state.dataCollector.loadData('dailyWeekly',1);
 
-console.log(state.dataCollector.testData.dataSets);
-console.log(state.dataCollector.dailyWeekly.dataSets);
-
-
+// console.log(state.dataCollector.testData.dataSets);
+// console.log(state.dataCollector.dailyWeekly.dataSets);
 //DAILY WEEKLY
 await state.dataCollector.loadDataTest(1); //data
 
@@ -32,10 +31,12 @@ state.chartCreator.renderChart(state.dataCollector.dailyDailyTemp);
 state.chartCreator.renderChart(state.dataCollector.hourlyTemp);
 
 
+ui.renderRadioButtons('dailyWeekly', state.dataCollector.dailyWeekly.variables);
+
 // state.chartCreator.renderChart('dailyDailyChart', [dailyWeekklyData, dailyWeekklyDataTwo], 'time', 'temperatureMin');
 // state.chartCreator.renderChart('hourlyChart', [dailyWeekklyData, dailyWeekklyDataTwo], 'time', 'temperatureMin');
 
-
+console.log(state.dataCollector);
 // console.log(state.chartCreator);
 }
 appCtrl();
@@ -74,6 +75,7 @@ const resizeCharts = () =>{
     
 };
 window.addEventListener('resize', resizeCharts);
+
 
 //RESIZE SECTION
 const resizeSection = () => {
@@ -134,33 +136,52 @@ const showChartInfo = (e) =>{
 
     const parent = e.target.parentNode.parentNode.parentNode;
     const chartInfo = parent.querySelector('.block__chartInfo');
+    const radioButton = parent.querySelector('.block__button--vars');
+    const wantShow = Array.from(chartInfo.classList).includes('chartInfo--hide') === true ? true : false;
 
-    const tl = new TimelineMax();
-    if(Array.from(chartInfo.classList).includes('chartInfo--hide')){
-        tl
-        .to(chartInfo, .1, {borderRadius: 50, opacity: 1, visibility: 'visible'})
-        .to(chartInfo, {scaleX: 1, scaleY: .02})
-        .to(chartInfo, {scaleX: 1, scaleY: 1})
+    ui.showAnimationElement(chartInfo,'chartInfo', wantShow);
 
-        chartInfo.classList.toggle('chartInfo--hide');
+    if(wantShow){
+        radioButton.removeEventListener('click', showRadioBox);
+        ui.switchButton(radioButton);
+
     }else{
-        tl
-        .to(chartInfo, {scaleX: 1, scaleY: .02})
-        .to(chartInfo, {scaleX: 0, scaleY: .0})
-        .to(chartInfo, {borderRadius: 50, visibility: 'hidden'})
+       
+        radioButton.addEventListener('click', showRadioBox);
+        ui.switchButton(radioButton);
 
-    chartInfo.classList.toggle('chartInfo--hide');
-
-    }
-
+    };
 };
-
 
 htmlComponents.chartInfo.buttons.forEach((el)=>{
     el.addEventListener('click', showChartInfo);
 })
 
+//SHOW CHANGE VAR RADIO BOX
+const showRadioBox = (e) => {
 
+    const parent = e.target.parentNode.parentNode.parentNode;
+    const radioBox = parent.querySelector('.block__chartRadiobox');
+    const infoButton = parent.querySelector('.block__button--info');
+    const wantShow = Array.from(radioBox.classList).includes('chartRadiobox--hide') === true ? true : false;
+
+    ui.showAnimationElement(radioBox,'chartRadiobox', wantShow);
+
+    const infoButtons = htmlComponents.chartInfo.buttons;
+
+    if(wantShow){
+        ui.switchButton(infoButton);
+        infoButton.removeEventListener('click', showChartInfo);
+
+    }else{
+        ui.switchButton(infoButton);
+        infoButton.addEventListener('click', showChartInfo);
+    };
+};
+
+htmlComponents.changeVar.buttons.forEach((el)=>{
+    el.addEventListener('click', showRadioBox)
+});
 
 
 

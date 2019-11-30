@@ -1,6 +1,6 @@
 import * as d3 from "d3";
 // import { curveCatmullRom, select, scaleTime, min, max, axisBottom, timeFormat, scaleLinear, axisLeft, line } from 'd3';
-import { htmlComponents } from '../base';
+import { htmlComponents } from '../UI/base';
 const moment = require('moment');
 
 
