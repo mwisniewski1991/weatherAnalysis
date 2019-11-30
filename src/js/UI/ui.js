@@ -3,17 +3,16 @@ import { TimelineMax } from 'gsap';
 
 export const renderRadioButtons = (chartType, variables) => {
 
-    const radioBox = htmlComponents[chartType].radioBox;
-
+    const radioBox = htmlComponents[chartType].section.querySelector('.block__chartRadiobox');
     
-    variables.forEach((variable, index) => {
+    variables.forEach((variable) => {
 
         const status = variable === 'temperature' ? 'checked' : '';
 
         const html = `
             <div class="radio">
-                <input class="radio__input" type="radio" name="dailyWeeklyVar" id="dailyWeekly-${variable}" ${status}>
-                <label class="radio__label" for="dailyWeekly-${variable}">${variable}</label>
+                <input class="radio__input" type="radio" name="${chartType}Var" id="${chartType}-${variable}" ${status}>
+                <label class="radio__label" for="${chartType}-${variable}">${variable}</label>
             </div>
         `;
 
@@ -48,4 +47,12 @@ export const showAnimationElement = (element, className, wantShow) => {
 export const switchButton = (button) => {
 
         button.classList.toggle('button--disactivate');
+};
+
+export const renderInfoText = (chartType, text, title) => {
+    const infoBox = htmlComponents[chartType].section.querySelector('.chartInfo__paragraph');
+    const heading = htmlComponents[chartType].section.querySelector('.block__heading');
+    infoBox.innerText = text;
+    heading.innerText = title;
+
 };

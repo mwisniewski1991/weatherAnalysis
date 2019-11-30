@@ -22,38 +22,44 @@ export default class DataCollector{
 
         this.dailyWeekly = {
             chartType: 'dailyWeeklyChart',
+            chartTitle: 'Daily forecast per week',
             xLabel: 'Time',
             yLabel: 'Temperature',
-            weeksNum: 1,
+            timePeriod: 1,
             routes: ['dailySummarise', 'dailyForecastWeekly'],
             variables: ['temperature', 'pressure', 'humidity', 'cloudCover'],
+            info: 'Daily weekly chart. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa, vero placeat? Obcaecati, saepe Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa, vero placeat? Obcaecati, saepe Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa, vero placeat? Obcaecati, saepe',
             dataSets: [
                 {   data: {},
                     setUp: [
-                        // {x: 'time', y:'temperatureMin', classLine:'chartLine__mainLine chartLine__mainLine--actualMin', classDots: 'chartLine__mainDott chartLine__mainDott--actualMin'},
-                        // {x: 'time', y:'temperatureMax', classLine:'chartLine__mainLine chartLine__mainLine--actualMax', classDots: 'chartLine__mainDott chartLine__mainDott--actualMax'}
-                        // {x: 'time', y:'pressure', classLine:'chartLine__mainLine chartLine__mainLine--actual', classDots: 'chartLine__mainDott chartLine__mainDott--actual'},
-                        // {x: 'time', y:'humidity', classLine:'chartLine__mainLine chartLine__mainLine--actual', classDots: 'chartLine__mainDott chartLine__mainDott--actual'},
-                        {x: 'time', y:'cloudCover', classLine:'chartLine__mainLine chartLine__mainLine--actual', classDots: 'chartLine__mainDott chartLine__mainDott--actual'},
+                        {x: 'time', y:'temperatureMin', classLine:'chartLine__mainLine chartLine__mainLine--actualMin', classDots: 'chartLine__mainDott chartLine__mainDott--actualMin', show: true},
+                        {x: 'time', y:'temperatureMax', classLine:'chartLine__mainLine chartLine__mainLine--actualMax', classDots: 'chartLine__mainDott chartLine__mainDott--actualMax', show: true},
+                        {x: 'time', y:'pressure', classLine:'chartLine__mainLine chartLine__mainLine--actual', classDots: 'chartLine__mainDott chartLine__mainDott--actual', show: false},
+                        {x: 'time', y:'humidity', classLine:'chartLine__mainLine chartLine__mainLine--actual', classDots: 'chartLine__mainDott chartLine__mainDott--actual', show: false},
+                        {x: 'time', y:'cloudCover', classLine:'chartLine__mainLine chartLine__mainLine--actual', classDots: 'chartLine__mainDott chartLine__mainDott--actual', show: false},
                     ]
                 },
                 {
                     data: {},
                     setUp: [
-                        // {x: 'time', y:'temperatureMin', classLine:'chartLine__mainLine chartLine__mainLine--forecastMin', classDots: 'chartLine__mainDott chartLine__mainDott--forecastMin'},
-                        // {x: 'time', y:'temperatureMax', classLine:'chartLine__mainLine chartLine__mainLine--forecastMax', classDots: 'chartLine__mainDott chartLine__mainDott--forecastMax'}
-                        // {x: 'time', y:'pressure', classLine:'chartLine__mainLine chartLine__mainLine--forecast', classDots: 'chartLine__mainDott chartLine__mainDott--forecast'},
-                        // {x: 'time', y:'humidity', classLine:'chartLine__mainLine chartLine__mainLine--forecast', classDots: 'chartLine__mainDott chartLine__mainDott--forecast'},
-                        {x: 'time', y:'cloudCover', classLine:'chartLine__mainLine chartLine__mainLine--forecast', classDots: 'chartLine__mainDott chartLine__mainDott--forecast'},
+                        {x: 'time', y:'temperatureMin', classLine:'chartLine__mainLine chartLine__mainLine--forecastMin', classDots: 'chartLine__mainDott chartLine__mainDott--forecastMin', show: true},
+                        {x: 'time', y:'temperatureMax', classLine:'chartLine__mainLine chartLine__mainLine--forecastMax', classDots: 'chartLine__mainDott chartLine__mainDott--forecastMax', show: true},
+                        {x: 'time', y:'pressure', classLine:'chartLine__mainLine chartLine__mainLine--forecast', classDots: 'chartLine__mainDott chartLine__mainDott--forecast', show: false},
+                        {x: 'time', y:'humidity', classLine:'chartLine__mainLine chartLine__mainLine--forecast', classDots: 'chartLine__mainDott chartLine__mainDott--forecast', show: false},
+                        {x: 'time', y:'cloudCover', classLine:'chartLine__mainLine chartLine__mainLine--forecast', classDots: 'chartLine__mainDott chartLine__mainDott--forecast', show: false},
                     ]
                 }
             ]
         }
 
-        this.dailyDailyTemp = {
+        this.dailyDaily = {
             chartType: 'dailyDailyChart',
+            chartTitle: 'Daily forecast per day',
             xLabel: 'Time',
             yLabel: 'Temperature',
+            weeksNum: 1,
+            variables: ['temperature', 'pressure', 'humidity', 'cloudCover'],
+            info: 'Daily daily chart. Ipsa, vero placeat? Obcaecati, saepe Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa, vero placeat? Obcaecati, saepe Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa, vero placeat? Obcaecati, saepe',
             dataSets: [
                 {   data: {},
                     setUp: [
@@ -69,10 +75,14 @@ export default class DataCollector{
             ]
         }
 
-        this.hourlyTemp = {
+        this.hourly = {
             chartType: 'hourlyChart',
+            chartTitle: 'Hourly forecast',
             xLabel: 'Time',
             yLabel: 'Temperature',
+            weeksNum: 1,
+            variables: ['temperature', 'pressure', 'humidity', 'cloudCover'],
+            info: 'Hourly chart. Saepe Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa, vero placeat? Obcaecati, saepe Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa, vero placeat? Obcaecati, saepe',
             dataSets: [
                 {   data: {},
                     setUp: [
@@ -168,12 +178,12 @@ export default class DataCollector{
 
         
         
-        this.dailyDailyTemp.dataSets[0].data = dailySummarise;
-        this.dailyDailyTemp.dataSets[1].data = dailyForecastWeekly;
+        this.dailyDaily.dataSets[0].data = dailySummarise;
+        this.dailyDaily.dataSets[1].data = dailyForecastWeekly;
 
         //hourlyTemp
-        this.hourlyTemp.dataSets[0].data = currentWeather;
-        this.hourlyTemp.dataSets[1].data = hourlyForecast;
+        this.hourly.dataSets[0].data = currentWeather;
+        this.hourly.dataSets[1].data = hourlyForecast;
 
 
         // console.log(dailySummarise)

@@ -25,13 +25,20 @@ await state.dataCollector.loadData('dailyWeekly',1);
 //DAILY WEEKLY
 await state.dataCollector.loadDataTest(1); //data
 
+const { dailyWeekly, dailyDaily, hourly } = state.dataCollector;
 
-state.chartCreator.renderChart(state.dataCollector.dailyWeekly);
-state.chartCreator.renderChart(state.dataCollector.dailyDailyTemp);
-state.chartCreator.renderChart(state.dataCollector.hourlyTemp);
+state.chartCreator.renderChart(dailyWeekly);
+// state.chartCreator.renderChart(dailyDaily);
+// state.chartCreator.renderChart(hourly);
 
 
-ui.renderRadioButtons('dailyWeekly', state.dataCollector.dailyWeekly.variables);
+ui.renderRadioButtons('dailyWeekly', dailyWeekly.variables);
+ui.renderRadioButtons('dailyDaily', dailyDaily.variables);
+ui.renderRadioButtons('hourly', hourly.variables);
+
+ui.renderInfoText('dailyWeekly', dailyWeekly.info, dailyWeekly.chartTitle);
+ui.renderInfoText('dailyDaily', dailyDaily.info, dailyDaily.chartTitle);
+ui.renderInfoText('hourly', hourly.info, hourly.chartTitle);
 
 // state.chartCreator.renderChart('dailyDailyChart', [dailyWeekklyData, dailyWeekklyDataTwo], 'time', 'temperatureMin');
 // state.chartCreator.renderChart('hourlyChart', [dailyWeekklyData, dailyWeekklyDataTwo], 'time', 'temperatureMin');
@@ -47,35 +54,75 @@ appCtrl();
 //CHANGE DAILYWEEKLY DATA
 const changeWeeklyDailyData = async (e) => {
 
-    const weeksNum = state.dataCollector.dailyWeekly.weeksNum;
-    const weeksCalc =  weeksNum + parseInt(e.target.value);
+    const timePeriod = state.dataCollector.dailyWeekly.timePeriod;
+    const weeksCalc =  timePeriod + parseInt(e.target.value);
     const chartType = e.target.id;
 
     if(weeksCalc > 0 && weeksCalc<4){
-        state.dataCollector.dailyWeekly.weeksNum = weeksCalc;
+        state.dataCollector.dailyWeekly.timePeriod = weeksCalc;
     };
 
-    await state.dataCollector.loadData('dailyWeekly', state.dataCollector.dailyWeekly.weeksNum);
+    await state.dataCollector.loadData('dailyWeekly', state.dataCollector.dailyWeekly.timePeriod);
 
     state.chartCreator.changeChart(state.dataCollector.dailyWeekly);
 
 };
+htmlComponents.dailyWeekly.buttonsWeeks.forEach((button) => {button.addEventListener('click', changeWeeklyDailyData)});
 
-htmlComponents.dailyWeekly.buttonsWeeks.forEach((button) => {
-    button.addEventListener('click', changeWeeklyDailyData)
+//CHANGE VARIABLE 
+const changeVariable = (e) => {
+    const input = e.target;
+
+    if(input.matches('input')){
+        const idString = input.id.split('-');
+        const chartType = idString[0];
+        const variable = idString[1];
+
+        // console.log(chartType);
+        // console.log(variable);
+
+        const { dataSets } = state.dataCollector[chartType]
+        
+        dataSets.forEach((el)=>{
+            el.setUp.forEach((elTwo) => {
+                elTwo.show = false;
+
+                if(elTwo.y.includes(variable)){
+                    elTwo.show = true;
+                }
+            })
+        })
+
+
+        state.chartCreator.changeChart(state.dataCollector.dailyWeekly);
+
+        // console.log(state.dataCollector[chartType].dataSets[0].setUp);
+        // console.log(state.dataCollector[chartType].dataSets[1].setUp);
+
+    }
+};
+
+htmlComponents.changeVar.box.forEach((el) => {
+    el.addEventListener('click', changeVariable)
 });
+
+
 
 //---------------------------------------------------------------------------------------------
 //RESIZE CHARTS
 const resizeCharts = () =>{
 
-    state.chartCreator.redrawChart(state.dataCollector.dailyWeekly);
-    state.chartCreator.redrawChart(state.dataCollector.dailyDailyTemp);
-    state.chartCreator.redrawChart(state.dataCollector.hourlyTemp);
+    const { dailyWeekly, dailyDaily, hourly } = state.dataCollector;
+
+
+    state.chartCreator.redrawChart(dailyWeekly);
+    // state.chartCreator.redrawChart(dailyDaily);
+    // state.chartCreator.redrawChart(hourly);
     
 };
 window.addEventListener('resize', resizeCharts);
 
+//---------------------------------------------------------------------------------------------
 
 //RESIZE SECTION
 const resizeSection = () => {
@@ -153,9 +200,7 @@ const showChartInfo = (e) =>{
     };
 };
 
-htmlComponents.chartInfo.buttons.forEach((el)=>{
-    el.addEventListener('click', showChartInfo);
-})
+htmlComponents.chartInfo.buttons.forEach((el)=>{ el.addEventListener('click', showChartInfo);});
 
 //SHOW CHANGE VAR RADIO BOX
 const showRadioBox = (e) => {
@@ -179,9 +224,7 @@ const showRadioBox = (e) => {
     };
 };
 
-htmlComponents.changeVar.buttons.forEach((el)=>{
-    el.addEventListener('click', showRadioBox)
-});
+htmlComponents.changeVar.buttons.forEach((el)=>{el.addEventListener('click', showRadioBox);});
 
 
 

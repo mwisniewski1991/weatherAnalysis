@@ -14,6 +14,7 @@ export const htmlComponents = {
     },
     changeVar: {
         buttons: Array.from(document.querySelectorAll('.block__button--vars')),
+        box: Array.from(document.querySelectorAll('.block__chartRadiobox')),
     },
     dailyWeekly: {
         section: document.querySelector('#dailyWekklySection'),
@@ -21,9 +22,13 @@ export const htmlComponents = {
         buttonLessWeeks: document.querySelector("#dailyWeeklyLessWeeks"),
         buttonMoreWeeks: document.querySelector("#dailyWeeklyMoreWeeks"),
         buttonsWeeks: Array.from(document.querySelectorAll(".block__button--changeTime")),
-        radioBox: document.querySelector('#dailyWeekly__chartRadiobox'),
+    },
+    dailyDaily:{
+        section: document.querySelector('#dailyDailySection'),
+
     },
     hourly: {
-        chart: document.querySelector('#hourly__chart'),
+        section: document.querySelector('#hourlySection'),
+        chart: document.querySelector('#dailyDaily__chartRadiobox'),
     }
 };

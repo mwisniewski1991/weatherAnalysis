@@ -53,7 +53,10 @@ export default class ChartCreator {
         const { x, y } = dataObj.dataSets[0].setUp[0];
         
         const data = [dataObj.dataSets[0].data, dataObj.dataSets[1].data];
-        const setUp = [dataObj.dataSets[0].setUp, dataObj.dataSets[1].setUp];
+        const setUp = [
+            dataObj.dataSets[0].setUp.filter(el => el.show === true),
+            dataObj.dataSets[1].setUp.filter(el => el.show === true)
+        ]
         
         // console.log("------------------")
         // console.log(dataObj.dataSets)
@@ -145,7 +148,8 @@ export default class ChartCreator {
 
             //HOW MANY PATHS 
             const numOfPaths = setUp[0].length + setUp[1].length;
-            const setUpArray = [...dataObj.dataSets[0].setUp, ...dataObj.dataSets[1].setUp];
+            const setUpArray = [...dataObj.dataSets[0].setUp.filter(el => el.show === true),
+                                ...dataObj.dataSets[1].setUp.filter(el => el.show === true)];
 
             //LOOP CREATE ALL LINES WHICH ARE REQUIRED
             for(let i=0 ; i<numOfPaths; i++){
@@ -164,15 +168,23 @@ export default class ChartCreator {
 
     changeChart(dataObj){
 
+
         const { chartType, xLabel, yLabel } = dataObj;
         const data = [dataObj.dataSets[0].data, dataObj.dataSets[1].data];
-        const setUp = [dataObj.dataSets[0].setUp, dataObj.dataSets[1].setUp];
+        const setUp = [
+                dataObj.dataSets[0].setUp.filter(el => el.show === true), 
+                dataObj.dataSets[1].setUp.filter(el => el.show === true)];
+
+        console.log(setUp)
+        
 
         this.calcXaxis(dataObj);
 
         //HOW MANY PATHS 
         const numOfPaths = setUp[0].length + setUp[1].length;
-        const setUpArray = [...dataObj.dataSets[0].setUp, ...dataObj.dataSets[1].setUp];
+        const setUpArray = [
+                ...dataObj.dataSets[0].setUp.filter(el => el.show === true),
+                ...dataObj.dataSets[1].setUp.filter(el => el.show === true)];
 
         for(let i=0 ; i<numOfPaths; i++){
             const helpNumber = numOfPaths / 2;
@@ -218,6 +230,12 @@ export default class ChartCreator {
                     .duration(1000)   
                     .attr('opacity', 1)
                     .attr("d", lineGenerator(data));
+
+            pathsDatajoin[pathNum]
+                .exit()
+                .transition().duration(500) 
+                .attr("opacity", 0)
+                .remove();
     }
 
     drawDots(chartType, data, setUp, dotsNum){
@@ -266,7 +284,9 @@ export default class ChartCreator {
 
         const { chartType } = dataObj;
         const data = [dataObj.dataSets[0].data, dataObj.dataSets[1].data];
-        const setUp = [...dataObj.dataSets[0].setUp, ...dataObj.dataSets[1].setUp];
+        const setUp = [
+            ...dataObj.dataSets[0].setUp.filter(el => el.show === true), 
+            ...dataObj.dataSets[1].setUp.filter(el => el.show === true)];
 
         const { div } = this.chartGroups[chartType];
         const { height, width } = document.querySelector(div).getBoundingClientRect()
