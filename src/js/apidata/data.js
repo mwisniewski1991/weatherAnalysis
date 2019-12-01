@@ -27,26 +27,26 @@ export default class DataCollector{
             yLabel: 'Temperature',
             timePeriod: 1,
             routes: ['dailySummarise', 'dailyForecastWeekly'],
-            variables: ['temperature', 'pressure', 'humidity', 'cloudCover'],
+            variables: ['temperatureMin', 'temperatureMax', 'pressure', 'humidity', 'cloudCover'],
             info: 'Daily weekly chart. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa, vero placeat? Obcaecati, saepe Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa, vero placeat? Obcaecati, saepe Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa, vero placeat? Obcaecati, saepe',
             dataSets: [
                 {   data: {},
                     setUp: [
-                        {x: 'time', y:'temperatureMin', classLine:'chartLine__mainLine chartLine__mainLine--actualMin', classDots: 'chartLine__mainDott chartLine__mainDott--actualMin', show: true},
-                        {x: 'time', y:'temperatureMax', classLine:'chartLine__mainLine chartLine__mainLine--actualMax', classDots: 'chartLine__mainDott chartLine__mainDott--actualMax', show: true},
-                        {x: 'time', y:'pressure', classLine:'chartLine__mainLine chartLine__mainLine--actual', classDots: 'chartLine__mainDott chartLine__mainDott--actual', show: false},
-                        {x: 'time', y:'humidity', classLine:'chartLine__mainLine chartLine__mainLine--actual', classDots: 'chartLine__mainDott chartLine__mainDott--actual', show: false},
-                        {x: 'time', y:'cloudCover', classLine:'chartLine__mainLine chartLine__mainLine--actual', classDots: 'chartLine__mainDott chartLine__mainDott--actual', show: false},
+                        {x: 'time', y:'temperatureMin', show: true, classLine:'chartLine__mainLine chartLine__mainLine--actualMin', classDots: 'chartLine__mainDott chartLine__mainDott--actualMin'},
+                        {x: 'time', y:'temperatureMax', show: false, classLine:'chartLine__mainLine chartLine__mainLine--actualMax', classDots: 'chartLine__mainDott chartLine__mainDott--actualMax'},
+                        {x: 'time', y:'pressure', show: false, classLine:'chartLine__mainLine chartLine__mainLine--actual', classDots: 'chartLine__mainDott chartLine__mainDott--actual'},
+                        {x: 'time', y:'humidity', show: false, classLine:'chartLine__mainLine chartLine__mainLine--actual', classDots: 'chartLine__mainDott chartLine__mainDott--actual'},
+                        {x: 'time', y:'cloudCover', show: false ,classLine:'chartLine__mainLine chartLine__mainLine--actual', classDots: 'chartLine__mainDott chartLine__mainDott--actual'},
                     ]
                 },
                 {
                     data: {},
                     setUp: [
-                        {x: 'time', y:'temperatureMin', classLine:'chartLine__mainLine chartLine__mainLine--forecastMin', classDots: 'chartLine__mainDott chartLine__mainDott--forecastMin', show: true},
-                        {x: 'time', y:'temperatureMax', classLine:'chartLine__mainLine chartLine__mainLine--forecastMax', classDots: 'chartLine__mainDott chartLine__mainDott--forecastMax', show: true},
-                        {x: 'time', y:'pressure', classLine:'chartLine__mainLine chartLine__mainLine--forecast', classDots: 'chartLine__mainDott chartLine__mainDott--forecast', show: false},
-                        {x: 'time', y:'humidity', classLine:'chartLine__mainLine chartLine__mainLine--forecast', classDots: 'chartLine__mainDott chartLine__mainDott--forecast', show: false},
-                        {x: 'time', y:'cloudCover', classLine:'chartLine__mainLine chartLine__mainLine--forecast', classDots: 'chartLine__mainDott chartLine__mainDott--forecast', show: false},
+                        {x: 'time', y:'temperatureMin',  show: true,  classLine:'chartLine__mainLine chartLine__mainLine--forecastMin', classDots: 'chartLine__mainDott chartLine__mainDott--forecastMin'},
+                        {x: 'time', y:'temperatureMax', show: false, classLine:'chartLine__mainLine chartLine__mainLine--forecastMax', classDots: 'chartLine__mainDott chartLine__mainDott--forecastMax'},
+                        {x: 'time', y:'pressure', show: false, classLine:'chartLine__mainLine chartLine__mainLine--forecast', classDots: 'chartLine__mainDott chartLine__mainDott--forecast'},
+                        {x: 'time', y:'humidity', show: false, classLine:'chartLine__mainLine chartLine__mainLine--forecast', classDots: 'chartLine__mainDott chartLine__mainDott--forecast'},
+                        {x: 'time', y:'cloudCover', show: false, classLine:'chartLine__mainLine chartLine__mainLine--forecast', classDots: 'chartLine__mainDott chartLine__mainDott--forecast'},
                     ]
                 }
             ]

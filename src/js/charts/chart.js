@@ -49,7 +49,7 @@ export default class ChartCreator {
 
         // console.log(dataObj.dataSets);
         //PREPARE INPUTS FROM OBJECTS
-        const { chartType, xLabel, yLabel } = dataObj;
+        const { chartType, xLabel } = dataObj;
         const { x, y } = dataObj.dataSets[0].setUp[0];
         
         const data = [dataObj.dataSets[0].data, dataObj.dataSets[1].data];
@@ -123,10 +123,10 @@ export default class ChartCreator {
 
             this.chartGroups[chartType].yScale = d3.scaleLinear() 
             // .domain(d3.extent(data, yValue))
-                .domain([this.calcMinValue(data, setUp) - 1, this.calcMaxValue(data, setUp) + 1])
+                .domain([this.calcMinValue(data, setUp), this.calcMaxValue(data, setUp)])
                 .range([svgHeight, 0])
                 .nice();                      
-            
+
             this.chartGroups[chartType].yAxisG = this.chartGroups[chartType].svgG.append('g')
                 .attr('class', 'chartLine__axisLine chartLine__axisLine--yLine')
                 .call(d3.axisLeft(this.chartGroups[chartType].yScale)
@@ -140,7 +140,7 @@ export default class ChartCreator {
                 .attr('transform','rotate(-90)')
                 .attr('x', -svgHeight/2)
                 .attr('y', -40)
-                .text(yLabel);             
+                .text(y);             
         }
                                             
         //LINE, DOTS      
@@ -168,17 +168,14 @@ export default class ChartCreator {
 
     changeChart(dataObj){
 
-
         const { chartType, xLabel, yLabel } = dataObj;
         const data = [dataObj.dataSets[0].data, dataObj.dataSets[1].data];
         const setUp = [
                 dataObj.dataSets[0].setUp.filter(el => el.show === true), 
                 dataObj.dataSets[1].setUp.filter(el => el.show === true)];
 
-        console.log(setUp)
-        
-
         this.calcXaxis(dataObj);
+        this.calcYaxis(dataObj);
 
         //HOW MANY PATHS 
         const numOfPaths = setUp[0].length + setUp[1].length;
@@ -279,10 +276,9 @@ export default class ChartCreator {
 
     }
 
-
     redrawChart(dataObj){
 
-        const { chartType } = dataObj;
+        const { chartType, xLabel } = dataObj;
         const data = [dataObj.dataSets[0].data, dataObj.dataSets[1].data];
         const setUp = [
             ...dataObj.dataSets[0].setUp.filter(el => el.show === true), 
@@ -309,6 +305,11 @@ export default class ChartCreator {
                                         .ticks(7)
                                         .tickFormat(d3.timeFormat("%d.%m"))
                                         .tickPadding(10));
+
+        this.chartGroups[chartType].xAxisG.select('chartLine__axisLabel')
+                .attr('x', svgWidth/2)
+                .attr('y', 50)
+                .text(xLabel);  
 
         //Y AXIS    
         this.chartGroups[chartType].yScale.range([svgHeight, 0])
@@ -357,6 +358,7 @@ export default class ChartCreator {
         const { height } = document.querySelector(div).getBoundingClientRect()
         const margin = this.chartSettings.margins;
         const svgHeight = height - margin.top - margin.bottom;
+        
 
         const data = [dataObj.dataSets[0].data, dataObj.dataSets[1].data];
         const { x } = dataObj.dataSets[0].setUp[0];
@@ -375,6 +377,35 @@ export default class ChartCreator {
 
     }
 
+    calcYaxis(dataObj){
+
+        const { chartType } = dataObj;
+
+        const { div, yScale, yAxisG } = this.chartGroups[chartType];
+        const { width } = document.querySelector(div).getBoundingClientRect()
+        
+        const margin = this.chartSettings.margins;
+        const svgWidth = width - margin.left - margin.right;
+
+        const data = [dataObj.dataSets[0].data, dataObj.dataSets[1].data];
+        const setUp = [
+            dataObj.dataSets[0].setUp.filter(el => el.show === true),
+            dataObj.dataSets[1].setUp.filter(el => el.show === true)];
+
+        const { y } = setUp[0][0];
+
+        yScale.domain([this.calcMinValue(data, setUp), this.calcMaxValue(data, setUp)])
+
+        yAxisG
+            .transition().duration(1000)
+            .call(d3.axisLeft(yScale)
+                .ticks(7)
+                .tickSize(-svgWidth)
+                .tickPadding(10));
+
+        yAxisG.select('.chartLine__axisLabel').text(y);
+    }
+
     calcMinValue(datasets, setUp){
 
         const datasetsValues = [];
@@ -385,11 +416,15 @@ export default class ChartCreator {
             setUp[index].forEach((el) => {
                 
                 const variable = el.y;
-                const tempValues = data.map(el => el[variable]);         
+                const tempValues = data.map(el => parseFloat(el[variable]));         
                 datasetsValues.push(...tempValues);
             })
         });
-        return d3.min(datasetsValues);
+
+        const buffer = .1;
+        const minValue = d3.min(datasetsValues) - (d3.min(datasetsValues) * buffer)
+
+        return minValue;
     }
 
     calcMaxValue(datasets, setUp){
@@ -399,11 +434,15 @@ export default class ChartCreator {
 
             setUp[index].forEach((el) => {
                 const variable = el.y;
-                const tempValues = data.map(el => el[variable]);         
+                const tempValues = data.map(el => parseFloat(el[variable]));         
                 datasetsValues.push(...tempValues);
             })
         });
-        return d3.max(datasetsValues);
+
+        const buffer = .1;
+        const maxValue = d3.max(datasetsValues) + (d3.max(datasetsValues) * buffer)
+
+        return maxValue;
     }
 
 
