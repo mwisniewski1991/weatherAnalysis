@@ -58,12 +58,6 @@ export default class ChartCreator {
             dataObj.dataSets[1].setUp.filter(el => el.show === true)
         ]
         
-        // console.log("------------------")
-        // console.log(dataObj.dataSets)
-        // console.log(dataObj.dataSets[0])
-        // console.log(dataObj.dataSets[0].data)
-        // console.log(setUp)
-        
         const { div, timeFormat, xTicks } = this.chartGroups[chartType];
 
         //DATA
@@ -140,7 +134,8 @@ export default class ChartCreator {
                 .attr('transform','rotate(-90)')
                 .attr('x', -svgHeight/2)
                 .attr('y', -40)
-                .text(y);             
+                .text(y);            
+                
         }
                                             
         //LINE, DOTS      
@@ -421,9 +416,9 @@ export default class ChartCreator {
             })
         });
 
-        const buffer = .1;
-        const minValue = d3.min(datasetsValues) - (d3.min(datasetsValues) * buffer)
-
+        const buffer = 0;
+        const minValue = d3.min(datasetsValues) + (d3.min(datasetsValues) * buffer);
+        
         return minValue;
     }
 
@@ -439,7 +434,7 @@ export default class ChartCreator {
             })
         });
 
-        const buffer = .1;
+        const buffer = 0;
         const maxValue = d3.max(datasetsValues) + (d3.max(datasetsValues) * buffer)
 
         return maxValue;

@@ -5,46 +5,47 @@ import ChartCreator from './charts/chart';
 import * as ui from './UI/ui';
 import { htmlComponents } from './UI/base';
 import { TimelineMax } from 'gsap';
-import { stat } from 'fs';
 
 const state = {};
 
 
 const appCtrl = async () => {
 
-//GET DATA
-state.dataCollector = new DataCollector;
-state.chartCreator = new ChartCreator;
+    //GET DATA
+    state.dataCollector = new DataCollector;
+    state.chartCreator = new ChartCreator;
 
 
-// await state.dataCollector.loadApi('dailyWeekly', 1);
-await state.dataCollector.loadData('dailyWeekly',1);
+    await state.dataCollector.loadApi('dailyWeekly', 1);
+    await state.dataCollector.loadApi('hourly', 1);
 
-// console.log(state.dataCollector.testData.dataSets);
-// console.log(state.dataCollector.dailyWeekly.dataSets);
-//DAILY WEEKLY
-await state.dataCollector.loadDataTest(1); //data
+    // await state.dataCollector.loadData('dailyWeekly', 1);
 
-const { dailyWeekly, dailyDaily, hourly } = state.dataCollector;
+    // console.log(state.dataCollector.testData.dataSets);
+    // console.log(state.dataCollector.dailyWeekly.dataSets);
+    //DAILY WEEKLY
+    // await state.dataCollector.loadDataTest(1); //data
 
-state.chartCreator.renderChart(dailyWeekly);
-// state.chartCreator.renderChart(dailyDaily);
-// state.chartCreator.renderChart(hourly);
+    const { dailyWeekly, dailyDaily, hourly } = state.dataCollector;
+
+    state.chartCreator.renderChart(dailyWeekly);
+    // state.chartCreator.renderChart(dailyDaily);
+    state.chartCreator.renderChart(hourly);
 
 
-ui.renderRadioButtons('dailyWeekly', dailyWeekly.variables);
-ui.renderRadioButtons('dailyDaily', dailyDaily.variables);
-ui.renderRadioButtons('hourly', hourly.variables);
+    ui.renderRadioButtons('dailyWeekly', dailyWeekly.variables);
+    ui.renderRadioButtons('dailyDaily', dailyDaily.variables);
+    ui.renderRadioButtons('hourly', hourly.variables);
 
-ui.renderInfoText('dailyWeekly', dailyWeekly.info, dailyWeekly.chartTitle);
-ui.renderInfoText('dailyDaily', dailyDaily.info, dailyDaily.chartTitle);
-ui.renderInfoText('hourly', hourly.info, hourly.chartTitle);
+    ui.renderInfoText('dailyWeekly', dailyWeekly.info, dailyWeekly.chartTitle);
+    ui.renderInfoText('dailyDaily', dailyDaily.info, dailyDaily.chartTitle);
+    ui.renderInfoText('hourly', hourly.info, hourly.chartTitle);
 
-// state.chartCreator.renderChart('dailyDailyChart', [dailyWeekklyData, dailyWeekklyDataTwo], 'time', 'temperatureMin');
-// state.chartCreator.renderChart('hourlyChart', [dailyWeekklyData, dailyWeekklyDataTwo], 'time', 'temperatureMin');
+    // state.chartCreator.renderChart('dailyDailyChart', [dailyWeekklyData, dailyWeekklyDataTwo], 'time', 'temperatureMin');
+    // state.chartCreator.renderChart('hourlyChart', [dailyWeekklyData, dailyWeekklyDataTwo], 'time', 'temperatureMin');
 
-console.log(state.dataCollector);
-// console.log(state.chartCreator);
+    console.log(state.dataCollector);
+    // console.log(state.chartCreator);
 }
 appCtrl();
 
@@ -62,7 +63,8 @@ const changeWeeklyDailyData = async (e) => {
         state.dataCollector.dailyWeekly.timePeriod = weeksCalc;
     };
 
-    await state.dataCollector.loadData('dailyWeekly', state.dataCollector.dailyWeekly.timePeriod);
+    // await state.dataCollector.loadData('dailyWeekly', state.dataCollector.dailyWeekly.timePeriod);
+    await state.dataCollector.loadApi('dailyWeekly', state.dataCollector.dailyWeekly.timePeriod);
 
     state.chartCreator.changeChart(state.dataCollector.dailyWeekly);
 

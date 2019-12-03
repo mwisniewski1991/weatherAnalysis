@@ -2,8 +2,8 @@ import { dailyForecastWeekly } from './dailyForecastWeekly'; //TEST
 import { dailySummarise } from './dailySummarise'; //TEST
 import { currentWeather } from './currentWeather'; //TEST
 import { hourlyForecast } from './hourlyForecast'; //TEST
-import { async } from 'q';
 const moment = require('moment');
+
 
 export default class DataCollector{
 
@@ -80,18 +80,25 @@ export default class DataCollector{
             chartTitle: 'Hourly forecast',
             xLabel: 'Time',
             yLabel: 'Temperature',
-            weeksNum: 1,
+            timePeriod: 1,
+            routes: ['currentWeather', 'hourlyForecast'],
             variables: ['temperature', 'pressure', 'humidity', 'cloudCover'],
             info: 'Hourly chart. Saepe Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa, vero placeat? Obcaecati, saepe Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa, vero placeat? Obcaecati, saepe',
             dataSets: [
                 {   data: {},
                     setUp: [
-                        {x: 'time', y:'temperature', classLine:'chartLine__mainLine chartLine__mainLine--actual', classDots: 'chartLine__mainDott chartLine__mainDott--actual'},
+                        {x: 'time', y:'temperature', show: true, classLine:'chartLine__mainLine chartLine__mainLine--actual', classDots: 'chartLine__mainDott chartLine__mainDott--actual'},
+                        {x: 'time', y:'temperature', show: false, classLine:'chartLine__mainLine chartLine__mainLine--actual', classDots: 'chartLine__mainDott chartLine__mainDott--actual'},
+                        {x: 'time', y:'temperature', show: false, classLine:'chartLine__mainLine chartLine__mainLine--actual', classDots: 'chartLine__mainDott chartLine__mainDott--actual'},
+                        {x: 'time', y:'temperature', show: false, classLine:'chartLine__mainLine chartLine__mainLine--actual', classDots: 'chartLine__mainDott chartLine__mainDott--actual'},
                     ]
                 },
                 {   data: {},
                     setUp: [
-                        {x: 'time', y:'temperature', classLine:'chartLine__mainLine chartLine__mainLine--forecast', classDots: 'chartLine__mainDott chartLine__mainDott--forecast'},
+                        {x: 'time', y:'temperature', show: true, classLine:'chartLine__mainLine chartLine__mainLine--forecast', classDots: 'chartLine__mainDott chartLine__mainDott--forecast'},
+                        {x: 'time', y:'temperature', show: false, classLine:'chartLine__mainLine chartLine__mainLine--forecast', classDots: 'chartLine__mainDott chartLine__mainDott--forecast'},
+                        {x: 'time', y:'temperature', show: false, classLine:'chartLine__mainLine chartLine__mainLine--forecast', classDots: 'chartLine__mainDott chartLine__mainDott--forecast'},
+                        {x: 'time', y:'temperature', show: false, classLine:'chartLine__mainLine chartLine__mainLine--forecast', classDots: 'chartLine__mainDott chartLine__mainDott--forecast'},
                     ]
                 }
             ]
@@ -101,20 +108,23 @@ export default class DataCollector{
     async loadApi(chartType, timeCounters){
 
         const routes = this[chartType].routes;
-        
-        routes.forEach(async (route, index) => {
+     
+        let index = 0;
+        for (const route of routes){
 
             const apiURL = `/${route}/${timeCounters}`;
 
             const response = await fetch(apiURL);
-            const data = await response.json();
-
+            const apiData = await response.json();
     
-            console.log(data);
+            // console.log(chartType);
+            // console.log(apiURL);
+            // console.log(apiData);
 
-            this.testData.dataSets[index].data = data;
-        })
-
+            this[chartType].dataSets[index].data = apiData;
+            index =+1
+        };
+     
     }
    
     loadData(chartType, weeks){
@@ -133,6 +143,9 @@ export default class DataCollector{
         // })
 
         const countDays = weeks * 7;
+
+        // console.log(dailySummarise.slice(0,countDays));
+        // console.log(dailyForecastWeekly.slice(0,countDays));
 
         //dailyWeeklyTemp
         this.dailyWeekly.dataSets[0].data = dailySummarise.slice(0,countDays)

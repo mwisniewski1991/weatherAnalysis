@@ -7,7 +7,7 @@ export const renderRadioButtons = (chartType, variables) => {
     
     variables.forEach((variable) => {
 
-        const status = variable === 'temperature' ? 'checked' : '';
+        const status = variable === 'temperatureMin' ? 'checked' : '';
 
         const html = `
             <div class="radio">
