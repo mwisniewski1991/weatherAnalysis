@@ -88,7 +88,6 @@ app.get('/dailyForecastWeekly/:timeCount', async (request, response)=> {
     }
 });
 
-
 app.get('/currentWeather/:timeCount', async (request, response) => {
 
     const timeCount = request.params.timeCount * 24;
@@ -121,7 +120,6 @@ app.get('/currentWeather/:timeCount', async (request, response) => {
 
 });
 
-
 app.get('/hourlyForecast/:timeCount', async (request, response) => {
 
     const timeCount = request.params.timeCount * 24;
@@ -150,4 +148,33 @@ app.get('/hourlyForecast/:timeCount', async (request, response) => {
         console.log(err);
     }
 
+});
+
+app.get('/dailyForecastDaily/:timeCount', async (request, response) => {
+
+    const timeCount = request.params.timeCount * 7;
+    // const now = moment().subtract(1, 'days')
+    const now = moment('2019-12-02').unix();
+
+    try{
+
+        const dailyForecastDaily = new Datastore('data/databases/dailyForecastDaily.db');
+        dailyForecastDaily.loadDatabase();
+            
+        dailyForecastDaily.find({time: {$lt: now}}).sort({collectTime: -1, time: -1}).limit(timeCount).exec( (err, docs)=>{
+
+            docs.forEach((doc) =>{
+                // doc.cloudCover = +doc.cloudCover;
+                // doc.humidity = +doc.humidity;
+                // doc.pressure = +doc.pressure;
+                doc.time = doc.time * 1000;
+            });
+
+            response.json(docs)
+        });
+
+    }catch(err){
+        console.log("ERROR")
+        console.log(err);
+    }
 });

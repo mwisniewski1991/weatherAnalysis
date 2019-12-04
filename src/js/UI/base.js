@@ -24,7 +24,7 @@ export const htmlComponents = {
         chart: document.querySelector('#dailyWeekly__chart')
     },
     dailyDaily:{
-        section: document.querySelector('#dailyDailySection'),
+        section: document.querySelector('#dailyDaily'),
 
     },
     hourly: {

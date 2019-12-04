@@ -39,10 +39,10 @@
             <div class="block__controller">
 
                 <div class="block__module block__module--time">
-                    <button class="block__button button block__button--changeTime" id="dailyWeekly" value="1">
+                    <button class="block__button button block__button--changeTime" value="1">
                             More weeks
                     </button>
-                    <button class="block__button button block__button--changeTime" id="dailyWeekly" value="-1">
+                    <button class="block__button button block__button--changeTime" value="-1">
                         Less weeks
                     </button>
                 </div>
@@ -76,6 +76,43 @@
             </div>
         </section>
 
+        <section class="layout__section block" id="dailyDaily">
+                <div class="block__title">
+                    <h2 class="block__heading heading heading--two">
+                    </h2>
+                </div>
+                <div class="block__controller">
+    
+                    <div class="block__module block__module--time">
+                        <button class="block__button button block__button--changeTime" value="1">
+                            More weeks
+                        </button>
+                        <button class="block__button button block__button--changeTime" value="-1">
+                            Less weeks
+                        </button>
+                    </div>
+                    <div class="block__module block__module--var">
+                        <button class="block__button block__button--vars button">
+                            Change variable
+                        </button>
+                    </div>
+    
+                    <div class="block__module block__module--info">
+                        <button class="block__button block__button--info button">
+                            Info
+                        </button>
+                    </div>
+    
+                </div>
+                <div class="block__chart" id="dailyDaily__chart">
+                    <div class="block__chartInfo chartInfo chartInfo--hide">
+                        <p class="chartInfo__paragraph"></p>
+                    </div>
+                    <div class="block__chartRadiobox chartRadiobox chartRadiobox--hide" id="dailyDaily__chartRadiobox">
+                    </div>
+                </div>
+            </section>
+
         <section class="layout__section block" id="hourly">
             <div class="block__title">
                 <h2 class="block__heading heading heading--two">
@@ -84,10 +121,10 @@
             <div class="block__controller">
                 <div class="block__module block__module--time">
                         <button class="block__button button block__button--changeTime" value="1">
-                                More weeks
+                            More hours
                             </button>
                         <button class="block__button button block__button--changeTime" value="-1">
-                            Less weeks
+                            Less hours
                         </button>
                     </div>
     
@@ -112,43 +149,7 @@
             </div>
         </section>
 
-        <section class="layout__section block" id="dailyDailySection">
-            <div class="block__title">
-                <h2 class="block__heading heading heading--two">
-                </h2>
-            </div>
-            <div class="block__controller">
-
-                <div class="block__module block__module--time">
-                    <button class="block__button button block__button--changeTime" value="-1">
-                        Less weeks
-                    </button>
-                    <button class="block__button button block__button--changeTime" value="1">
-                        More weeks
-                    </button>
-                </div>
-
-                <div class="block__module block__module--var">
-                    <button class="block__button block__button--vars button">
-                        Change variable
-                    </button>
-                </div>
-
-                <div class="block__module block__module--info">
-                    <button class="block__button block__button--info button">
-                        Info
-                    </button>
-                </div>
-
-            </div>
-            <div class="block__chart" id="dailyDaily__chart">
-                <div class="block__chartInfo chartInfo chartInfo--hide">
-                    <p class="chartInfo__paragraph"></p>
-                </div>
-                <div class="block__chartRadiobox chartRadiobox chartRadiobox--hide" id="dailyDaily__chartRadiobox">
-                </div>
-            </div>
-        </section>
+        
 
 
       

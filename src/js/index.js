@@ -15,36 +15,25 @@ const appCtrl = async () => {
     state.dataCollector = new DataCollector;
     state.chartCreator = new ChartCreator;
 
-
     await state.dataCollector.loadApi('dailyWeekly', 1);
+    await state.dataCollector.loadApi('dailyDaily', 1);
     await state.dataCollector.loadApi('hourly', 1);
-
-    // await state.dataCollector.loadData('dailyWeekly', 1);
-
-    // console.log(state.dataCollector.testData.dataSets);
-    // console.log(state.dataCollector.dailyWeekly.dataSets);
-    //DAILY WEEKLY
-    // await state.dataCollector.loadDataTest(1); //data
 
     const { dailyWeekly, dailyDaily, hourly } = state.dataCollector;
 
     state.chartCreator.renderChart(dailyWeekly);
+    state.chartCreator.renderChart(dailyDaily);
     state.chartCreator.renderChart(hourly);
-    // state.chartCreator.renderChart(dailyDaily);
-
 
     ui.renderRadioButtons('dailyWeekly', dailyWeekly.variables, dailyWeekly.dataSets[0].setUp);
+    ui.renderRadioButtons('dailyDaily', dailyDaily.variables, dailyDaily.dataSets[0].setUp);
     ui.renderRadioButtons('hourly', hourly.variables, hourly.dataSets[0].setUp);
-    // ui.renderRadioButtons('dailyDaily', dailyDaily.variables, dailyDaily.dataSets[0].setUp);
 
     ui.renderInfoText('dailyWeekly', dailyWeekly.info, dailyWeekly.chartTitle);
+    ui.renderInfoText('dailyDaily', dailyDaily.info, dailyDaily.chartTitle);
     ui.renderInfoText('hourly', hourly.info, hourly.chartTitle);
-    // ui.renderInfoText('dailyDaily', dailyDaily.info, dailyDaily.chartTitle);
 
-    // state.chartCreator.renderChart('dailyDailyChart', [dailyWeekklyData, dailyWeekklyDataTwo], 'time', 'temperatureMin');
-    // state.chartCreator.renderChart('hourlyChart', [dailyWeekklyData, dailyWeekklyDataTwo], 'time', 'temperatureMin');
-
-    console.log(state.dataCollector);
+    console.log(state.dataCollector.dailyDaily);
     // console.log(state.chartCreator);
 }
 appCtrl();
@@ -108,10 +97,9 @@ const resizeCharts = () =>{
 
     const { dailyWeekly, dailyDaily, hourly } = state.dataCollector;
 
-
     state.chartCreator.redrawChart(dailyWeekly);
-    // state.chartCreator.redrawChart(dailyDaily);
-    // state.chartCreator.redrawChart(hourly);
+    state.chartCreator.redrawChart(dailyDaily);
+    state.chartCreator.redrawChart(hourly);
     
 };
 window.addEventListener('resize', resizeCharts);
