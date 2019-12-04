@@ -1,13 +1,14 @@
 import  { htmlComponents } from './base'
 import { TimelineMax } from 'gsap';
 
-export const renderRadioButtons = (chartType, variables) => {
+export const renderRadioButtons = (chartType, variables, setUp) => {
 
     const radioBox = htmlComponents[chartType].section.querySelector('.block__chartRadiobox');
+    const currentVar = setUp.filter(el => el.show === true).map(el => el.y)[0]; //set current variable from data class
     
     variables.forEach((variable) => {
 
-        const status = variable === 'temperatureMin' ? 'checked' : '';
+        const status = variable === currentVar ? 'checked' : '';
 
         const html = `
             <div class="radio">

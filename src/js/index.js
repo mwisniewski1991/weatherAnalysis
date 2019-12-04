@@ -29,17 +29,17 @@ const appCtrl = async () => {
     const { dailyWeekly, dailyDaily, hourly } = state.dataCollector;
 
     state.chartCreator.renderChart(dailyWeekly);
-    // state.chartCreator.renderChart(dailyDaily);
     state.chartCreator.renderChart(hourly);
+    // state.chartCreator.renderChart(dailyDaily);
 
 
-    ui.renderRadioButtons('dailyWeekly', dailyWeekly.variables);
-    ui.renderRadioButtons('dailyDaily', dailyDaily.variables);
-    ui.renderRadioButtons('hourly', hourly.variables);
+    ui.renderRadioButtons('dailyWeekly', dailyWeekly.variables, dailyWeekly.dataSets[0].setUp);
+    ui.renderRadioButtons('hourly', hourly.variables, hourly.dataSets[0].setUp);
+    // ui.renderRadioButtons('dailyDaily', dailyDaily.variables, dailyDaily.dataSets[0].setUp);
 
     ui.renderInfoText('dailyWeekly', dailyWeekly.info, dailyWeekly.chartTitle);
-    ui.renderInfoText('dailyDaily', dailyDaily.info, dailyDaily.chartTitle);
     ui.renderInfoText('hourly', hourly.info, hourly.chartTitle);
+    // ui.renderInfoText('dailyDaily', dailyDaily.info, dailyDaily.chartTitle);
 
     // state.chartCreator.renderChart('dailyDailyChart', [dailyWeekklyData, dailyWeekklyDataTwo], 'time', 'temperatureMin');
     // state.chartCreator.renderChart('hourlyChart', [dailyWeekklyData, dailyWeekklyDataTwo], 'time', 'temperatureMin');
@@ -53,23 +53,22 @@ appCtrl();
 
 //---------------------------------------------------------------------------------------------
 //CHANGE DAILYWEEKLY DATA
-const changeWeeklyDailyData = async (e) => {
+const changeTimePeriod = async (e) => {
 
-    const timePeriod = state.dataCollector.dailyWeekly.timePeriod;
+    const chartType = e.target.parentNode.parentNode.parentNode.id;
+    const timePeriod = state.dataCollector[chartType].timePeriod;
     const weeksCalc =  timePeriod + parseInt(e.target.value);
-    const chartType = e.target.id;
 
-    if(weeksCalc > 0 && weeksCalc<4){
-        state.dataCollector.dailyWeekly.timePeriod = weeksCalc;
+    if(weeksCalc > 0 && weeksCalc<4){   //no longer than 3 periods
+        state.dataCollector[chartType].timePeriod = weeksCalc;
     };
 
-    // await state.dataCollector.loadData('dailyWeekly', state.dataCollector.dailyWeekly.timePeriod);
-    await state.dataCollector.loadApi('dailyWeekly', state.dataCollector.dailyWeekly.timePeriod);
-
-    state.chartCreator.changeChart(state.dataCollector.dailyWeekly);
+    await state.dataCollector.loadApi(chartType, state.dataCollector[chartType].timePeriod);
+    state.chartCreator.changeChart(state.dataCollector[chartType]);
 
 };
-htmlComponents.dailyWeekly.buttonsWeeks.forEach((button) => {button.addEventListener('click', changeWeeklyDailyData)});
+
+htmlComponents.changePeriod.buttonsWeeks.forEach((button) => {button.addEventListener('click', changeTimePeriod)});
 
 //CHANGE VARIABLE 
 const changeVariable = (e) => {
@@ -79,9 +78,6 @@ const changeVariable = (e) => {
         const idString = input.id.split('-');
         const chartType = idString[0];
         const variable = idString[1];
-
-        // console.log(chartType);
-        // console.log(variable);
 
         const { dataSets } = state.dataCollector[chartType]
         
@@ -95,11 +91,7 @@ const changeVariable = (e) => {
             })
         })
 
-
-        state.chartCreator.changeChart(state.dataCollector.dailyWeekly);
-
-        // console.log(state.dataCollector[chartType].dataSets[0].setUp);
-        // console.log(state.dataCollector[chartType].dataSets[1].setUp);
+        state.chartCreator.changeChart(state.dataCollector[chartType]);
 
     }
 };

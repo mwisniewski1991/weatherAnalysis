@@ -31,7 +31,7 @@
 
     <main class="layout layout--up">
 
-        <section class="layout__section block" id="dailyWekklySection">
+        <section class="layout__section block" id="dailyWeekly">
             <div class="block__title">
                 <h2 class="block__heading heading heading--two">
                 </h2>
@@ -76,6 +76,42 @@
             </div>
         </section>
 
+        <section class="layout__section block" id="hourly">
+            <div class="block__title">
+                <h2 class="block__heading heading heading--two">
+                </h2>
+            </div>
+            <div class="block__controller">
+                <div class="block__module block__module--time">
+                        <button class="block__button button block__button--changeTime" value="1">
+                                More weeks
+                            </button>
+                        <button class="block__button button block__button--changeTime" value="-1">
+                            Less weeks
+                        </button>
+                    </div>
+    
+                    <div class="block__module block__module--var">
+                        <button class="block__button block__button--vars button">
+                            Change variable
+                        </button>
+                    </div>
+    
+                    <div class="block__module block__module--info">
+                        <button class="block__button block__button--info button">
+                            Info
+                        </button>
+                    </div>
+            </div>
+            <div class="block__chart" id="hourly__chart">
+                <div class="block__chartInfo chartInfo chartInfo--hide">
+                    <p class="chartInfo__paragraph"></p>
+                </div>
+                <div class="block__chartRadiobox chartRadiobox chartRadiobox--hide" id="hourly__chartRadiobox">
+                </div>
+            </div>
+        </section>
+
         <section class="layout__section block" id="dailyDailySection">
             <div class="block__title">
                 <h2 class="block__heading heading heading--two">
@@ -115,41 +151,7 @@
         </section>
 
 
-        <section class="layout__section block" id="hourlySection">
-            <div class="block__title">
-                <h2 class="block__heading heading heading--two">
-                </h2>
-            </div>
-            <div class="block__controller">
-                <div class="block__module block__module--time">
-                        <button class="block__button button block__button--changeTime" value="-1">
-                            Less weeks
-                        </button>
-                        <button class="block__button button block__button--changeTime" value="1">
-                            More weeks
-                        </button>
-                    </div>
-    
-                    <div class="block__module block__module--var">
-                        <button class="block__button block__button--vars button">
-                            Change variable
-                        </button>
-                    </div>
-    
-                    <div class="block__module block__module--info">
-                        <button class="block__button block__button--info button">
-                            Info
-                        </button>
-                    </div>
-            </div>
-            <div class="block__chart" id="hourly__chart">
-                <div class="block__chartInfo chartInfo chartInfo--hide">
-                    <p class="chartInfo__paragraph"></p>
-                </div>
-                <div class="block__chartRadiobox chartRadiobox chartRadiobox--hide" id="hourly__chartRadiobox">
-                </div>
-            </div>
-        </section>
+      
 
 
     </main>
