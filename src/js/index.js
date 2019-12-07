@@ -15,9 +15,13 @@ const appCtrl = async () => {
     state.dataCollector = new DataCollector;
     state.chartCreator = new ChartCreator;
 
-    await state.dataCollector.loadApi('dailyWeekly', 1);
-    await state.dataCollector.loadApi('dailyDaily', 1);
-    await state.dataCollector.loadApi('hourly', 1);
+    // await state.dataCollector.loadApi('dailyWeekly', 2);
+    // await state.dataCollector.loadApi('dailyDaily', 2);
+    // await state.dataCollector.loadApi('hourly', 2);
+
+    await state.dataCollector.loadData('dailyWeekly', 2);
+
+
 
     const { dailyWeekly, dailyDaily, hourly } = state.dataCollector;
 
@@ -33,7 +37,7 @@ const appCtrl = async () => {
     ui.renderInfoText('dailyDaily', dailyDaily.info, dailyDaily.chartTitle);
     ui.renderInfoText('hourly', hourly.info, hourly.chartTitle);
 
-    console.log(state.dataCollector.dailyDaily);
+    console.log(state.dataCollector.dailyWeekly);
     // console.log(state.chartCreator);
 }
 appCtrl();
@@ -47,17 +51,50 @@ const changeTimePeriod = async (e) => {
     const chartType = e.target.parentNode.parentNode.parentNode.id;
     const timePeriod = state.dataCollector[chartType].timePeriod;
     const weeksCalc =  timePeriod + parseInt(e.target.value);
+    const minPeriod = 1;
+    const maxPeriod = 4;
 
-    if(weeksCalc > 0 && weeksCalc<4){   //no longer than 3 periods
+    const buttonLess = document.querySelector(`#${chartType}`).querySelector('.block__button--lessTime');
+    const buttonMore = document.querySelector(`#${chartType}`).querySelector('.block__button--moreTime');
+    const buttonLessClassList = Array.from(buttonLess.classList);
+    const buttonMoreClassList = Array.from(buttonMore.classList);
+
+    //PART TO CONFIGURE BUTTONS
+    if(buttonLessClassList.includes('button--disactivate')){
+        buttonLess.classList.toggle('button--disactivate');
+        buttonLess.addEventListener('click', changeTimePeriod);
+    };
+    if(buttonMoreClassList.includes('button--disactivate')){
+        buttonMore.classList.toggle('button--disactivate');
+        buttonMore.addEventListener('click', changeTimePeriod);
+    };  
+
+    //PART TO CHANGE TIME PERIOD IN STATE
+    if(weeksCalc >= minPeriod && weeksCalc <= maxPeriod){   //no longer than 3 periods
         state.dataCollector[chartType].timePeriod = weeksCalc;
+    };
+
+    console.log(state.dataCollector[chartType].timePeriod);
+
+
+    //PART TO CONFIGURE BUTTONS
+    if (state.dataCollector[chartType].timePeriod === minPeriod){
+        buttonLess.classList.toggle('button--disactivate');
+        buttonLess.removeEventListener('click', changeTimePeriod);
+    }
+    if(state.dataCollector[chartType].timePeriod === maxPeriod){
+        buttonMore.classList.toggle('button--disactivate');
+        buttonMore.removeEventListener('click', changeTimePeriod);
     };
 
     await state.dataCollector.loadApi(chartType, state.dataCollector[chartType].timePeriod);
     state.chartCreator.changeChart(state.dataCollector[chartType]);
 
+
 };
 
 htmlComponents.changePeriod.buttonsWeeks.forEach((button) => {button.addEventListener('click', changeTimePeriod)});
+
 
 //CHANGE VARIABLE 
 const changeVariable = (e) => {
