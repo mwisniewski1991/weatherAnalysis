@@ -4,7 +4,8 @@ export const htmlComponents = {
     footer: document.querySelector('.footer'),
     sections: Array.from(document.querySelectorAll('.layout__section')),
     info: {
-        button: document.getElementsByClassName('info__button')[0],
+        div: document.querySelector('.info'),
+        buttons: Array.from(document.querySelectorAll('.info__button')),
         textBox: document.getElementsByClassName('info__textBox')[0],
         paragraph: document.getElementsByClassName('info__paragraph')[0],
     },

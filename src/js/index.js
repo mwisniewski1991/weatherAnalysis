@@ -18,7 +18,7 @@ const appCtrl = async () => {
     // await state.dataCollector.loadApi('dailyWeekly', 2);
     // await state.dataCollector.loadApi('dailyDaily', 2);
     // await state.dataCollector.loadApi('hourly', 2);
-
+// 
     await state.dataCollector.loadData('dailyWeekly', 2);
 
 
@@ -37,7 +37,7 @@ const appCtrl = async () => {
     ui.renderInfoText('dailyDaily', dailyDaily.info, dailyDaily.chartTitle);
     ui.renderInfoText('hourly', hourly.info, hourly.chartTitle);
 
-    console.log(state.dataCollector.dailyWeekly);
+    // console.log(state.dataCollector.dailyWeekly);
     // console.log(state.chartCreator);
 }
 appCtrl();
@@ -74,8 +74,6 @@ const changeTimePeriod = async (e) => {
         state.dataCollector[chartType].timePeriod = weeksCalc;
     };
 
-    console.log(state.dataCollector[chartType].timePeriod);
-
 
     //PART TO CONFIGURE BUTTONS
     if (state.dataCollector[chartType].timePeriod === minPeriod){
@@ -92,9 +90,7 @@ const changeTimePeriod = async (e) => {
 
 
 };
-
 htmlComponents.changePeriod.buttonsWeeks.forEach((button) => {button.addEventListener('click', changeTimePeriod)});
-
 
 //CHANGE VARIABLE 
 const changeVariable = (e) => {
@@ -121,79 +117,7 @@ const changeVariable = (e) => {
 
     }
 };
-
-htmlComponents.changeVar.box.forEach((el) => {
-    el.addEventListener('click', changeVariable)
-});
-
-
-
-//---------------------------------------------------------------------------------------------
-//RESIZE CHARTS
-const resizeCharts = () =>{
-
-    const { dailyWeekly, dailyDaily, hourly } = state.dataCollector;
-
-    state.chartCreator.redrawChart(dailyWeekly);
-    state.chartCreator.redrawChart(dailyDaily);
-    state.chartCreator.redrawChart(hourly);
-    
-};
-window.addEventListener('resize', resizeCharts);
-
-//---------------------------------------------------------------------------------------------
-
-//RESIZE SECTION
-const resizeSection = () => {
-    const width = window.innerWidth
-
-    if(width>900){
-        const newWidth = width / 2 - 30;
-        htmlComponents.sections.forEach( (el) =>{
-            el.style.width = `${newWidth}px`;
-        });
-    }
-    if(width<=900){
-        const newWidth = width - 45;
-        htmlComponents.sections.forEach( (el) =>{
-            el.style.width = `${newWidth}px`;
-        });
-    }
-
-    
-
-    // section.style.width = `${width}px`;
-};
-window.addEventListener('resize', resizeSection);
-
-//---------------------------------------------------------------------------------------------
-//INFO BOX FUCNTION
-const setUpMainFooter = () => {
-
-    const button = htmlComponents.info.button;
-    const main = htmlComponents.mainUp;
-    const footer = htmlComponents.footer;
-
-    const buttonPos = button.getBoundingClientRect().bottom;
-    const mainPos = main.getBoundingClientRect().top;
-    const offsetHeight = -(mainPos - buttonPos - 10)
-
-    document.documentElement.style.setProperty("--mainOffset", `${offsetHeight}px`);
-    main.style.transition = `transition: all .5s linear`;
-
-}
-const showInfo = () => {
-
-    const infoBox = htmlComponents.info.textBox;
-    const main = htmlComponents.main;
-    const footer = htmlComponents.footer;
-    
-    infoBox.classList.toggle('info__textBox--show');
-    main.classList.toggle('layout--up')
-
-};
-//EVENST LISTENNERS
-htmlComponents.info.button.addEventListener('click', showInfo);
+htmlComponents.changeVar.box.forEach((el) => {el.addEventListener('click', changeVariable)});
 
 
 //---------------------------------------------------------------------------------------------
@@ -218,7 +142,6 @@ const showChartInfo = (e) =>{
 
     };
 };
-
 htmlComponents.chartInfo.buttons.forEach((el)=>{ el.addEventListener('click', showChartInfo);});
 
 //SHOW CHANGE VAR RADIO BOX
@@ -242,11 +165,77 @@ const showRadioBox = (e) => {
         infoButton.addEventListener('click', showChartInfo);
     };
 };
-
 htmlComponents.changeVar.buttons.forEach((el)=>{el.addEventListener('click', showRadioBox);});
 
+//---------------------------------------------------------------------------------------------
+//INFO BOX FUCNTION
+const setUpMainFooter = () => {
+
+    const button = htmlComponents.info.button;
+    const main = htmlComponents.mainUp;
+    const footer = htmlComponents.footer;
+
+    const buttonPos = button.getBoundingClientRect().bottom;
+    const mainPos = main.getBoundingClientRect().top;
+    const offsetHeight = -(mainPos - buttonPos - 10)
+
+    document.documentElement.style.setProperty("--mainOffset", `${offsetHeight}px`);
+    main.style.transition = `transition: all .5s linear`;
+
+}
+const showInfo = () => {
+    console.log("GIT")
+
+    const info = htmlComponents.info.div;
+
+    const wantShow = Array.from(info.classList).includes('info--hide') === true ? true : false;
+
+    ui.showAnimationElement(info,'chartRadiobox', wantShow);
+    info.classList.toggle('info--hide');
+};
+//EVENST LISTENNERS
+htmlComponents.info.buttons.forEach((button) =>{button.addEventListener('click', showInfo);});
 
 
-// window.onload = () => {
-//     setUpMainFooter()
-// }    
+
+
+
+//---------------------------------------------------------------------------------------------
+//RESIZE CHARTS
+const resizeCharts = () =>{
+
+    const { dailyWeekly, dailyDaily, hourly } = state.dataCollector;
+
+    state.chartCreator.redrawChart(dailyWeekly);
+    state.chartCreator.redrawChart(dailyDaily);
+    state.chartCreator.redrawChart(hourly);
+    
+};
+window.addEventListener('resize', resizeCharts);
+window.addEventListener('orientationchange', resizeCharts);
+
+//---------------------------------------------------------------------------------------------
+//RESIZE SECTION
+const resizeSection = () => {
+    const width = window.innerWidth
+
+    if(width>900){
+        const newWidth = width / 2 - 30;
+        htmlComponents.sections.forEach( (el) =>{
+            el.style.width = `${newWidth}px`;
+        });
+    }
+    if(width<=900){
+        const newWidth = width - 45;
+        htmlComponents.sections.forEach( (el) =>{
+            el.style.width = `${newWidth}px`;
+        });
+    }
+
+    
+
+    // section.style.width = `${width}px`;
+};
+
+window.addEventListener('resize', resizeSection);
+window.addEventListener('orientationchange', resizeSection);
