@@ -3,7 +3,7 @@ import { TimelineMax } from 'gsap';
 
 export const renderRadioButtons = (chartType, variables, setUp) => {
 
-    const radioBox = htmlComponents[chartType].section.querySelector('.block__chartRadiobox');
+    const radioBox = htmlComponents[chartType].section.querySelector('.block__chartBlackboard--chartRadiobox');
     const currentVar = setUp.filter(el => el.show === true).map(el => el.y)[0]; //set current variable from data class
     
     variables.forEach((variable) => {
@@ -46,8 +46,8 @@ export const showAnimationElement = (element, className, wantShow) => {
 };
 
 export const switchButton = (button) => {
-
         button.classList.toggle('button--disactivate');
+        if(button.disabled){button.disabled = false}else{button.disabled = true};
 };
 
 export const renderInfoText = (chartType, text, title) => {

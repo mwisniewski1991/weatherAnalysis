@@ -4,7 +4,6 @@ import DataCollector from './apidata/data';
 import ChartCreator from './charts/chart';
 import * as ui from './UI/ui';
 import { htmlComponents } from './UI/base';
-import { TimelineMax } from 'gsap';
 
 const state = {};
 
@@ -15,11 +14,11 @@ const appCtrl = async () => {
     state.dataCollector = new DataCollector;
     state.chartCreator = new ChartCreator;
 
-    // await state.dataCollector.loadApi('dailyWeekly', 2);
-    // await state.dataCollector.loadApi('dailyDaily', 2);
-    // await state.dataCollector.loadApi('hourly', 2);
-// 
-    await state.dataCollector.loadData('dailyWeekly', 2);
+    await state.dataCollector.loadApi('dailyWeekly', 2);
+    await state.dataCollector.loadApi('dailyDaily', 2);
+    await state.dataCollector.loadApi('hourly', 2);
+
+    // await state.dataCollector.loadData('dailyWeekly', 2);
 
 
 
@@ -41,8 +40,6 @@ const appCtrl = async () => {
     // console.log(state.chartCreator);
 }
 appCtrl();
-
-
 
 //---------------------------------------------------------------------------------------------
 //CHANGE DAILYWEEKLY DATA
@@ -117,72 +114,35 @@ const changeVariable = (e) => {
 
     }
 };
-htmlComponents.changeVar.box.forEach((el) => {el.addEventListener('click', changeVariable)});
+htmlComponents.chartRadiobox.box.addEventListener('click', changeVariable);
 
 
 //---------------------------------------------------------------------------------------------
-//SHOW CHART INFO
-const showChartInfo = (e) =>{
-
+//SHOW BLACKBOARDS
+const showBlackboard = (e) =>{
+    
+    const id = e.target.id;
     const parent = e.target.parentNode.parentNode.parentNode;
-    const chartInfo = parent.querySelector('.block__chartInfo');
-    const radioButton = parent.querySelector('.block__button--vars');
-    const wantShow = Array.from(chartInfo.classList).includes('chartInfo--hide') === true ? true : false;
+    const blackboard = parent.querySelector(`.block__chartBlackboard--${id}`)
 
-    ui.showAnimationElement(chartInfo,'chartInfo', wantShow);
+    const wantShow = Array.from(blackboard.classList).includes(`${id}--hide`) === true ? true : false;
+  
+    ui.showAnimationElement(blackboard, id, wantShow);
+    
+    const otherButtons = Array.from(parent.querySelectorAll('.block__button--blackboard '));
 
-    if(wantShow){
-        radioButton.removeEventListener('click', showRadioBox);
-        ui.switchButton(radioButton);
+    otherButtons.forEach( (button) => {
+        if(button.id !== id){
+            ui.switchButton(button);
+        }
+    });
 
-    }else{
-       
-        radioButton.addEventListener('click', showRadioBox);
-        ui.switchButton(radioButton);
-
-    };
 };
-htmlComponents.chartInfo.buttons.forEach((el)=>{ el.addEventListener('click', showChartInfo);});
+htmlComponents.blackBoards.buttons.forEach(el => {el.addEventListener('click', showBlackboard)})
 
-//SHOW CHANGE VAR RADIO BOX
-const showRadioBox = (e) => {
-
-    const parent = e.target.parentNode.parentNode.parentNode;
-    const radioBox = parent.querySelector('.block__chartRadiobox');
-    const infoButton = parent.querySelector('.block__button--info');
-    const wantShow = Array.from(radioBox.classList).includes('chartRadiobox--hide') === true ? true : false;
-
-    ui.showAnimationElement(radioBox,'chartRadiobox', wantShow);
-
-    const infoButtons = htmlComponents.chartInfo.buttons;
-
-    if(wantShow){
-        ui.switchButton(infoButton);
-        infoButton.removeEventListener('click', showChartInfo);
-
-    }else{
-        ui.switchButton(infoButton);
-        infoButton.addEventListener('click', showChartInfo);
-    };
-};
-htmlComponents.changeVar.buttons.forEach((el)=>{el.addEventListener('click', showRadioBox);});
 
 //---------------------------------------------------------------------------------------------
 //INFO BOX FUCNTION
-const setUpMainFooter = () => {
-
-    const button = htmlComponents.info.button;
-    const main = htmlComponents.mainUp;
-    const footer = htmlComponents.footer;
-
-    const buttonPos = button.getBoundingClientRect().bottom;
-    const mainPos = main.getBoundingClientRect().top;
-    const offsetHeight = -(mainPos - buttonPos - 10)
-
-    document.documentElement.style.setProperty("--mainOffset", `${offsetHeight}px`);
-    main.style.transition = `transition: all .5s linear`;
-
-}
 const showInfo = () => {
     console.log("GIT")
 
@@ -195,10 +155,6 @@ const showInfo = () => {
 };
 //EVENST LISTENNERS
 htmlComponents.info.buttons.forEach((button) =>{button.addEventListener('click', showInfo);});
-
-
-
-
 
 //---------------------------------------------------------------------------------------------
 //RESIZE CHARTS
