@@ -28,7 +28,8 @@ export default class DataCollector{
             timePeriod: 2,
             routes: ['dailySummarise', 'dailyForecastWeekly'],
             variables: ['temperatureMin', 'temperatureMax', 'pressure', 'humidity', 'cloudCover'],
-            info: 'Daily weekly chart. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa, vero placeat? Obcaecati, saepe Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa, vero placeat? Obcaecati, saepe Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa, vero placeat? Obcaecati, saepe',
+            info: 'Chart show real situation in past period for each day. It is comapare with forecast. Forecast has been take at the begining of weekend for whole 7 days. So we can compare one week prediction against real situation.'
+            ,
             dataSets: [
                 {   data: {},
                     setUp: [
@@ -60,7 +61,7 @@ export default class DataCollector{
             timePeriod: 2,
             routes: ['dailySummarise', 'dailyForecastDaily'],
             variables: ['temperatureMin', 'temperatureMax', 'pressure', 'humidity', 'cloudCover'],
-            info: 'Daily daily chart. Ipsa, vero placeat? Obcaecati, saepe Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa, vero placeat? Obcaecati, saepe Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa, vero placeat? Obcaecati, saepe',
+            info: 'Chart show real situation in past period for each day. It is comapare with forecast. Forecast is taken every day for next day. For example tool check on Monday prediction on Tuesday. This data is compared with real situation in past period.',
             dataSets: [
                 {   data: {},
                     setUp: [
@@ -92,7 +93,7 @@ export default class DataCollector{
             timePeriod: 2,
             routes: ['currentWeather', 'hourlyForecast'],
             variables: ['temperature', 'pressure', 'humidity', 'cloudCover'],
-            info: 'Hourly chart. Saepe Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa, vero placeat? Obcaecati, saepe Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa, vero placeat? Obcaecati, saepe',
+            info: 'Chart show real situation in past period for each hour. Forecast is taken every day before midnight for next day. Prediction is comapred with real situation.',
             dataSets: [
                 {   data: {},
                     setUp: [

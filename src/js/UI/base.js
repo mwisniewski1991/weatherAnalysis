@@ -16,7 +16,7 @@ export const htmlComponents = {
         buttons: Array.from(document.querySelectorAll('.block__button--blackboard')),
     },
     chartRadiobox: {
-        box: document.querySelector('.block__chartBlackboard--chartRadiobox'),
+        box: Array.from(document.querySelectorAll('.block__chartBlackboard--chartRadiobox')),
     },
     dailyWeekly: {
         section: document.querySelector('#dailyWeekly'),

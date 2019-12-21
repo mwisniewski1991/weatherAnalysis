@@ -20,8 +20,6 @@ const appCtrl = async () => {
 
     // await state.dataCollector.loadData('dailyWeekly', 2);
 
-
-
     const { dailyWeekly, dailyDaily, hourly } = state.dataCollector;
 
     state.chartCreator.renderChart(dailyWeekly);
@@ -114,8 +112,7 @@ const changeVariable = (e) => {
 
     }
 };
-htmlComponents.chartRadiobox.box.addEventListener('click', changeVariable);
-
+htmlComponents.chartRadiobox.box.forEach(el => el.addEventListener('click', changeVariable))
 
 //---------------------------------------------------------------------------------------------
 //SHOW BLACKBOARDS
