@@ -43,6 +43,13 @@ const appCtrl = async () => {
     ui.renderInfoText('forecasts', forecasts.info, forecasts.chartTitle);
     ui.renderInfoText('moonPhase', moonPhase.info, moonPhase.chartTitle);
 
+    ui.renderLegend('dailyWeekly', dailyWeekly.legend);
+    ui.renderLegend('dailyDaily', dailyDaily.legend);
+    ui.renderLegend('hourly', hourly.legend);
+    ui.renderLegend('forecasts', forecasts.legend);
+    ui.renderLegend('moonPhase', moonPhase.legend);
+
+
 
     console.log(state.dataCollector);
     // console.log(state.chartCreator);

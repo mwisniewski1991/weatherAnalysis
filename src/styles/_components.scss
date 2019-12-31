@@ -288,6 +288,25 @@
     
 }
 
+.legend{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    &__text{
+        display: block;
+        font-size: 2rem;
+
+        &--actual{color: $colorActual;}
+        &--forecast{color: $colorForecast;}
+        &--forecastDaily{color: $colorForecastDaily}
+        &--forecastWeekly{color: $colorForecastWeekly}
+        &--moonPhase{color: $colorMoonPhase}
+
+    }
+}
+
 .chartInfo {
     padding: 1.5rem;
 
@@ -349,6 +368,8 @@
         &--forecastMax{stroke: $colorForecastMax;}
         &--forecastDaily{stroke: $colorForecastDaily}
         &--forecastWeekly{stroke: $colorForecastWeekly}
+        &--moonPhase{stroke: $colorMoonPhase}
+
     }
 
     &__mainDott{
@@ -362,6 +383,8 @@
         &--forecastMax{fill: $colorForecastMax; stroke: $colorForecastMax;}
         &--forecastDaily{fill: $colorForecastDaily; stroke: $colorForecastDaily}
         &--forecastWeekly{fill: $colorForecastWeekly; stroke: $colorForecastWeekly}
+        &--moonPhase{fill: $colorMoonPhase; stroke: $colorMoonPhase}
+
     }
 
 }

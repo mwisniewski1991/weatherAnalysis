@@ -28,13 +28,16 @@ export default class DataCollector{
             timePeriod: 2,
             routes: ['dailySummarise', 'dailyForecastWeekly'],
             variables: ['temperatureMin', 'temperatureMax', 'pressure', 'humidity', 'cloudCover'],
-            info: 'Chart show real situation in past period for each day. It is comapare with forecast. Forecast has been take at the begining of weekend for whole 7 days. So we can compare one week prediction against real situation.'
-            ,
+            info: 'Chart show real situation in past period for each day. It is comapare with forecast. Forecast has been take at the begining of weekend for whole 7 days. So we can compare one week prediction against real situation.',
+            legend: [
+                {text: 'Actual temperature', class:'legend__text--actual'},
+                {text: 'Forecast weekly', class:'legend__text--forecast'},
+            ],
             dataSets: [
                 {   data: {},
                     setUp: [
-                        {x: 'time', y:'temperatureMin', show: true, classLine:'chartLine__mainLine chartLine__mainLine--actualMin', classDots: 'chartLine__mainDott chartLine__mainDott--actualMin'},
-                        {x: 'time', y:'temperatureMax', show: false, classLine:'chartLine__mainLine chartLine__mainLine--actualMax', classDots: 'chartLine__mainDott chartLine__mainDott--actualMax'},
+                        {x: 'time', y:'temperatureMin', show: true, classLine:'chartLine__mainLine chartLine__mainLine--actual', classDots: 'chartLine__mainDott chartLine__mainDott--actual'},
+                        {x: 'time', y:'temperatureMax', show: false, classLine:'chartLine__mainLine chartLine__mainLine--actual', classDots: 'chartLine__mainDott chartLine__mainDott--actual'},
                         {x: 'time', y:'pressure', show: false, classLine:'chartLine__mainLine chartLine__mainLine--actual', classDots: 'chartLine__mainDott chartLine__mainDott--actual'},
                         {x: 'time', y:'humidity', show: false, classLine:'chartLine__mainLine chartLine__mainLine--actual', classDots: 'chartLine__mainDott chartLine__mainDott--actual'},
                         {x: 'time', y:'cloudCover', show: false ,classLine:'chartLine__mainLine chartLine__mainLine--actual', classDots: 'chartLine__mainDott chartLine__mainDott--actual'},
@@ -43,8 +46,8 @@ export default class DataCollector{
                 {
                     data: {},
                     setUp: [
-                        {x: 'time', y:'temperatureMin',  show: true,  classLine:'chartLine__mainLine chartLine__mainLine--forecastMin', classDots: 'chartLine__mainDott chartLine__mainDott--forecastMin'},
-                        {x: 'time', y:'temperatureMax', show: false, classLine:'chartLine__mainLine chartLine__mainLine--forecastMax', classDots: 'chartLine__mainDott chartLine__mainDott--forecastMax'},
+                        {x: 'time', y:'temperatureMin',  show: true,  classLine:'chartLine__mainLine chartLine__mainLine--forecast', classDots: 'chartLine__mainDott chartLine__mainDott--forecast'},
+                        {x: 'time', y:'temperatureMax', show: false, classLine:'chartLine__mainLine chartLine__mainLine--forecast', classDots: 'chartLine__mainDott chartLine__mainDott--forecast'},
                         {x: 'time', y:'pressure', show: false, classLine:'chartLine__mainLine chartLine__mainLine--forecast', classDots: 'chartLine__mainDott chartLine__mainDott--forecast'},
                         {x: 'time', y:'humidity', show: false, classLine:'chartLine__mainLine chartLine__mainLine--forecast', classDots: 'chartLine__mainDott chartLine__mainDott--forecast'},
                         {x: 'time', y:'cloudCover', show: false, classLine:'chartLine__mainLine chartLine__mainLine--forecast', classDots: 'chartLine__mainDott chartLine__mainDott--forecast'},
@@ -62,11 +65,15 @@ export default class DataCollector{
             routes: ['dailySummarise', 'dailyForecastDaily'],
             variables: ['temperatureMin', 'temperatureMax', 'pressure', 'humidity', 'cloudCover'],
             info: 'Chart show real situation in past period for each day. It is comapare with forecast. Forecast is taken every day for next day. For example tool check on Monday prediction on Tuesday. This data is compared with real situation in past period.',
+            legend: [
+                {text: 'Actual temperature', class:'legend__text--actual'},
+                {text: 'Forecast daily', class:'legend__text--forecast'},
+            ],
             dataSets: [
                 {   data: {},
                     setUp: [
-                        {x: 'time', y:'temperatureMin', show: true, classLine:'chartLine__mainLine chartLine__mainLine--actualMin', classDots: 'chartLine__mainDott chartLine__mainDott--actualMin'},
-                        {x: 'time', y:'temperatureMax', show: false, classLine:'chartLine__mainLine chartLine__mainLine--actualMax', classDots: 'chartLine__mainDott chartLine__mainDott--actualMax'},
+                        {x: 'time', y:'temperatureMin', show: true, classLine:'chartLine__mainLine chartLine__mainLine--actual', classDots: 'chartLine__mainDott chartLine__mainDott--actual'},
+                        {x: 'time', y:'temperatureMax', show: false, classLine:'chartLine__mainLine chartLine__mainLine--actual', classDots: 'chartLine__mainDott chartLine__mainDott--actual'},
                         {x: 'time', y:'pressure', show: false, classLine:'chartLine__mainLine chartLine__mainLine--actual', classDots: 'chartLine__mainDott chartLine__mainDott--actual'},
                         {x: 'time', y:'humidity', show: false, classLine:'chartLine__mainLine chartLine__mainLine--actual', classDots: 'chartLine__mainDott chartLine__mainDott--actual'},
                         {x: 'time', y:'cloudCover', show: false ,classLine:'chartLine__mainLine chartLine__mainLine--actual', classDots: 'chartLine__mainDott chartLine__mainDott--actual'},
@@ -75,8 +82,8 @@ export default class DataCollector{
                 {
                     data: {},
                     setUp: [
-                        {x: 'time', y:'temperatureMin',  show: true,  classLine:'chartLine__mainLine chartLine__mainLine--forecastMin', classDots: 'chartLine__mainDott chartLine__mainDott--forecastMin'},
-                        {x: 'time', y:'temperatureMax', show: false, classLine:'chartLine__mainLine chartLine__mainLine--forecastMax', classDots: 'chartLine__mainDott chartLine__mainDott--forecastMax'},
+                        {x: 'time', y:'temperatureMin',  show: true,  classLine:'chartLine__mainLine chartLine__mainLine--forecast', classDots: 'chartLine__mainDott chartLine__mainDott--forecast'},
+                        {x: 'time', y:'temperatureMax', show: false, classLine:'chartLine__mainLine chartLine__mainLine--forecast', classDots: 'chartLine__mainDott chartLine__mainDott--forecast'},
                         {x: 'time', y:'pressure', show: false, classLine:'chartLine__mainLine chartLine__mainLine--forecast', classDots: 'chartLine__mainDott chartLine__mainDott--forecast'},
                         {x: 'time', y:'humidity', show: false, classLine:'chartLine__mainLine chartLine__mainLine--forecast', classDots: 'chartLine__mainDott chartLine__mainDott--forecast'},
                         {x: 'time', y:'cloudCover', show: false, classLine:'chartLine__mainLine chartLine__mainLine--forecast', classDots: 'chartLine__mainDott chartLine__mainDott--forecast'},
@@ -94,6 +101,10 @@ export default class DataCollector{
             routes: ['currentWeather', 'hourlyForecast'],
             variables: ['temperature', 'pressure', 'humidity', 'cloudCover'],
             info: 'Chart show real situation in past period for each hour. Forecast is taken every day before midnight for next day. Prediction is comapred with real situation.',
+            legend: [
+                {text: 'Actual temperature', class:'legend__text--actual'},
+                {text: 'Forecast hourly', class:'legend__text--forecast'},
+            ],
             dataSets: [
                 {   data: {},
                     setUp: [
@@ -123,6 +134,10 @@ export default class DataCollector{
             routes: ['dailyForecastDaily', 'dailyForecastWeekly'],
             variables: ['temperatureMin', 'temperatureMax', 'pressure', 'humidity', 'cloudCover'],
             info: 'Chart compare forecast daily and forecast weekly. It is possible to check diffrence beetween prediction take one time at beggining of week and prediction taking every day.',
+            legend: [
+                {text: 'Forecast daily', class:'legend__text--forecastDaily'},
+                {text: 'Forecast weekly', class:'legend__text--forecastWeekly'},
+            ],
             dataSets:[
                 {   
                     data: {},
@@ -156,17 +171,20 @@ export default class DataCollector{
             routes: ['dailyForecastDaily', 'dailyForecastDaily'],
             variables: ['moonPhase'],
             info: 'Chart show moon phase for every date.',
+            legend: [
+                {text: 'Moon phase', class:'legend__text--moonPhase'},
+            ],
             dataSets:[
                 {   
                     data: {},
                     setUp: [
-                        {x: 'time', y:'moonPhase', show: true, classLine:'chartLine__mainLine chartLine__mainLine--forecastDaily', classDots: 'chartLine__mainDott chartLine__mainDott--forecastDaily'},
+                        {x: 'time', y:'moonPhase', show: true, classLine:'chartLine__mainLine chartLine__mainLine--moonPhase', classDots: 'chartLine__mainDott chartLine__mainDott--moonPhase'},
                     ]
                 },
                 {   
                     data: {},
                     setUp: [
-                        {x: 'time', y:'moonPhase', show: true, classLine:'chartLine__mainLine chartLine__mainLine--forecastDaily', classDots: 'chartLine__mainDott chartLine__mainDott--forecastDaily'},
+                        {x: 'time', y:'moonPhase', show: true, classLine:'chartLine__mainLine chartLine__mainLine--moonPhase', classDots: 'chartLine__mainDott chartLine__mainDott--moonPhase'},
                     ]
                 },
             ]

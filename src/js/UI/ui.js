@@ -1,5 +1,6 @@
 import  { htmlComponents } from './base'
 import { TimelineMax } from 'gsap';
+import { html } from 'd3';
 
 export const renderRadioButtons = (chartType, variables, setUp) => {
 
@@ -56,4 +57,27 @@ export const renderInfoText = (chartType, text, title) => {
     infoBox.innerText = text;
     heading.innerText = title;
 
+};
+
+export const renderLegend = (chartType, legend) => {
+    console.log(chartType);
+    console.log(legend);
+
+    const section = htmlComponents[chartType].section;
+    const legendBox = section.querySelector('.block__chartBlackboard--legend');
+
+    legend.forEach((el) => {
+
+        const className = el.class;
+        const text = el.text;
+
+        const html = `
+            <span class="legend__text ${className}">
+                ${text}
+            </span>
+        `; 
+
+        legendBox.insertAdjacentHTML('beforeend', html)
+    });
+    
 };
