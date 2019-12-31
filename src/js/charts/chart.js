@@ -34,6 +34,24 @@ export default class ChartCreator {
                 dotsDatajoin: [],
                 timeFormat: '%d.%m',
                 xTicks: 7,
+            },
+            forecasts:{
+                div: '#forecasts__chart',
+                paths: [],
+                pathsDatajoin: [],
+                dots: [],
+                dotsDatajoin: [],
+                timeFormat: '%d.%m',
+                xTicks: 7,
+            },
+            moonPhase:{
+                div: '#moonPhase__chart',
+                paths: [],
+                pathsDatajoin: [],
+                dots: [],
+                dotsDatajoin: [],
+                timeFormat: '%d.%m',
+                xTicks: 7,
             }
         }
 

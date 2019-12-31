@@ -113,6 +113,64 @@ export default class DataCollector{
                 }
             ]
         }
+
+        this.forecasts ={
+            chartType: 'forecasts',
+            chartTitle: 'Forecasts',
+            xLabel: 'Time',
+            yLabel: 'Temperature',
+            timePeriod: 2,
+            routes: ['dailyForecastDaily', 'dailyForecastWeekly'],
+            variables: ['temperatureMin', 'temperatureMax', 'pressure', 'humidity', 'cloudCover'],
+            info: 'Chart compare forecast daily and forecast weekly. It is possible to check diffrence beetween prediction take one time at beggining of week and prediction taking every day.',
+            dataSets:[
+                {   
+                    data: {},
+                    setUp: [
+                        {x: 'time', y:'temperatureMin', show: true, classLine:'chartLine__mainLine chartLine__mainLine--forecastDaily', classDots: 'chartLine__mainDott chartLine__mainDott--forecastDaily'},
+                        {x: 'time', y:'temperatureMax', show: false, classLine:'chartLine__mainLine chartLine__mainLine--forecastDaily', classDots: 'chartLine__mainDott chartLine__mainDott--forecastDaily'},
+                        {x: 'time', y:'pressure', show: false, classLine:'chartLine__mainLine chartLine__mainLine--forecastDaily', classDots: 'chartLine__mainDott chartLine__mainDott--forecastDaily'},
+                        {x: 'time', y:'humidity', show: false, classLine:'chartLine__mainLine chartLine__mainLine--forecastDaily', classDots: 'chartLine__mainDott chartLine__mainDott--forecastDaily'},
+                        {x: 'time', y:'cloudCover', show: false ,classLine:'chartLine__mainLine chartLine__mainLine--forecastDaily', classDots: 'chartLine__mainDott chartLine__mainDott--forecastDaily'},
+                    ]
+                },
+                {
+                    data: {},
+                    setUp: [
+                        {x: 'time', y:'temperatureMin',  show: true,  classLine:'chartLine__mainLine chartLine__mainLine--forecastWeekly', classDots: 'chartLine__mainDott chartLine__mainDott--forecastWeekly'},
+                        {x: 'time', y:'temperatureMax', show: false, classLine:'chartLine__mainLine chartLine__mainLine--forecastWeekly', classDots: 'chartLine__mainDott chartLine__mainDott--forecastWeekly'},
+                        {x: 'time', y:'pressure', show: false, classLine:'chartLine__mainLine chartLine__mainLine--forecastWeekly', classDots: 'chartLine__mainDott chartLine__mainDott--forecastWeekly'},
+                        {x: 'time', y:'humidity', show: false, classLine:'chartLine__mainLine chartLine__mainLine--forecastWeekly', classDots: 'chartLine__mainDott chartLine__mainDott--forecastWeekly'},
+                        {x: 'time', y:'cloudCover', show: false, classLine:'chartLine__mainLine chartLine__mainLine--forecastWeekly', classDots: 'chartLine__mainDott chartLine__mainDott--forecastWeekly'},
+                    ]
+                }
+            ]
+        }
+
+        this.moonPhase={
+            chartType: 'moonPhase',
+            chartTitle: 'Moon phase',
+            xLabel: 'Time',
+            yLabel: 'Moon phase',
+            timePeriod: 2,
+            routes: ['dailyForecastDaily', 'dailyForecastDaily'],
+            variables: ['moonPhase'],
+            info: 'Chart show moon phase for every date.',
+            dataSets:[
+                {   
+                    data: {},
+                    setUp: [
+                        {x: 'time', y:'moonPhase', show: true, classLine:'chartLine__mainLine chartLine__mainLine--forecastDaily', classDots: 'chartLine__mainDott chartLine__mainDott--forecastDaily'},
+                    ]
+                },
+                {   
+                    data: {},
+                    setUp: [
+                        {x: 'time', y:'moonPhase', show: true, classLine:'chartLine__mainLine chartLine__mainLine--forecastDaily', classDots: 'chartLine__mainDott chartLine__mainDott--forecastDaily'},
+                    ]
+                },
+            ]
+        }
     }
 
     async loadApi(chartType, timeCounters){

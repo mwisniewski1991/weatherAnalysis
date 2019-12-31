@@ -29,5 +29,13 @@ export const htmlComponents = {
     hourly: {
         section: document.querySelector('#hourly'),
         chart: document.querySelector('#dailyDaily__chartRadiobox'),
+    },
+    forecasts:{
+        section: document.querySelector('#forecasts'),
+        // chart: document.querySelector('#dailyDaily__chartRadiobox'),
+    },
+    moonPhase:{
+        section: document.querySelector('#moonPhase'),
+        // chart: document.querySelector('#dailyDaily__chartRadiobox'),
     }
 };

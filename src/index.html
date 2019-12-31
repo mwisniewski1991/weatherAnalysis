@@ -154,10 +154,61 @@
             </div>
         </section>
 
+        <section class="layout__section block" id="forecasts">
+            <div class="block__title">
+                <h2 class="block__heading heading heading--two"></h2>
+            </div>
+                
+            <div class="block__controller">
+                <div class="block__module block__module--time">
+                    <button class="button block__button block__button--changeTime block__button--moreTime" value="1">
+                        More hours
+                    </button>
+                    <button class="button block__button block__button--changeTime block__button--lessTime" value="-1">
+                        Less hours
+                    </button>
+                </div>
+
+                <div class="block__module block__module--var">
+                    <button class="block__button block__button--vars block__button--blackboard button"
+                        id="chartRadiobox">
+                        Change variable
+                    </button>
+                </div>
+
+                <div class="block__module block__module--legend">
+                    <button class="block__button block__button--legend block__button--blackboard button" id="legend">
+                        Legend
+                    </button>
+                </div>
+
+                <div class="block__module block__module--info">
+                    <button class="block__button block__button--info block__button--blackboard button" id="chartInfo">
+                        Info
+                    </button>
+                </div>
+
+            </div>
+
+            <div class="block__chart" id="forecasts__chart">
+                <div class="block__chartBlackboard block__chartBlackboard--chartRadiobox chartRadiobox--hide"
+                id="chartRadiobox">
+                    <!-- <div class="radio">
+                        <input class="radio__input" type="radio" name="dailyWeeklyVar" id="radio1" checked>
+                        <label class="radio__label" for="radio1">Min Temperature</label>
+                    </div> -->
+                </div>
+                <div class="block__chartBlackboard block__chartBlackboard--legend legend--hide" id="legend"></div>
+                <div class="block__chartBlackboard block__chartBlackboard--chartInfo chartInfo--hide" id="chartInfo">
+                    <p class="chartInfo__paragraph"></p>
+                </div>
+            </div>
+
+        </section >
+
         <section class="layout__section block" id="hourly">
             <div class="block__title">
-                <h2 class="block__heading heading heading--two">
-                </h2>
+                <h2 class="block__heading heading heading--two"></h2>
             </div>
             <div class="block__controller">
                 <div class="block__module block__module--time">
@@ -187,11 +238,8 @@
                         Info
                     </button>
                 </div>
-
-
             </div>
             <div class="block__chart" id="hourly__chart">
-
 
                 <div class="block__chartBlackboard block__chartBlackboard--chartRadiobox chartRadiobox--hide"
                     id="chartRadiobox">
@@ -207,12 +255,60 @@
                     <p class="chartInfo__paragraph"></p>
                 </div>
 
-
-
             </div>
         </section>
 
+        <section class="layout__section block" id="moonPhase">
+            <div class="block__title">
+                <h2 class="block__heading heading heading--two"></h2>
+            </div>
+            <div class="block__controller">
+                <div class="block__module block__module--time">
+                    <button class="block__button button block__button--changeTime block__button--moreTime" value="1">
+                        More hours
+                    </button>
+                    <button class="block__button button block__button--changeTime block__button--lessTime" value="-1">
+                        Less hours
+                    </button>
+                </div>
 
+                <div class="block__module block__module--var">
+                    <button class="block__button block__button--vars block__button--blackboard button"
+                        id="chartRadiobox">
+                        Change variable
+                    </button>
+                </div>
+
+                <div class="block__module block__module--legend">
+                    <button class="block__button block__button--legend block__button--blackboard button" id="legend">
+                        Legend
+                    </button>
+                </div>
+
+                <div class="block__module block__module--info">
+                    <button class="block__button block__button--info block__button--blackboard button" id="chartInfo">
+                        Info
+                    </button>
+                </div>
+            </div>
+            <div class="block__chart" id="moonPhase__chart">
+
+                <div class="block__chartBlackboard block__chartBlackboard--chartRadiobox chartRadiobox--hide"
+                    id="chartRadiobox">
+                    <!-- <div class="radio">
+                        <input class="radio__input" type="radio" name="dailyWeeklyVar" id="radio1" checked>
+                        <label class="radio__label" for="radio1">Min Temperature</label>
+                    </div> -->
+                </div>
+
+                <div class="block__chartBlackboard block__chartBlackboard--legend legend--hide" id="legend"></div>
+
+                <div class="block__chartBlackboard block__chartBlackboard--chartInfo chartInfo--hide" id="chartInfo">
+                    <p class="chartInfo__paragraph"></p>
+                </div>
+
+            </div>
+        </section>
 
 
 

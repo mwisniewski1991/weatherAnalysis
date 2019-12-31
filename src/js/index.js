@@ -17,24 +17,34 @@ const appCtrl = async () => {
     await state.dataCollector.loadApi('dailyWeekly', 2);
     await state.dataCollector.loadApi('dailyDaily', 2);
     await state.dataCollector.loadApi('hourly', 2);
+    await state.dataCollector.loadApi('forecasts', 2);
+    await state.dataCollector.loadApi('moonPhase', 2);
+
 
     // await state.dataCollector.loadData('dailyWeekly', 2);
 
-    const { dailyWeekly, dailyDaily, hourly } = state.dataCollector;
+    const { dailyWeekly, dailyDaily, hourly, forecasts, moonPhase } = state.dataCollector;
 
     state.chartCreator.renderChart(dailyWeekly);
     state.chartCreator.renderChart(dailyDaily);
     state.chartCreator.renderChart(hourly);
+    state.chartCreator.renderChart(forecasts);
+    state.chartCreator.renderChart(moonPhase);
 
     ui.renderRadioButtons('dailyWeekly', dailyWeekly.variables, dailyWeekly.dataSets[0].setUp);
     ui.renderRadioButtons('dailyDaily', dailyDaily.variables, dailyDaily.dataSets[0].setUp);
     ui.renderRadioButtons('hourly', hourly.variables, hourly.dataSets[0].setUp);
+    ui.renderRadioButtons('forecasts', forecasts.variables, forecasts.dataSets[0].setUp);
+    ui.renderRadioButtons('moonPhase', moonPhase.variables, moonPhase.dataSets[0].setUp);
 
     ui.renderInfoText('dailyWeekly', dailyWeekly.info, dailyWeekly.chartTitle);
     ui.renderInfoText('dailyDaily', dailyDaily.info, dailyDaily.chartTitle);
     ui.renderInfoText('hourly', hourly.info, hourly.chartTitle);
+    ui.renderInfoText('forecasts', forecasts.info, forecasts.chartTitle);
+    ui.renderInfoText('moonPhase', moonPhase.info, moonPhase.chartTitle);
 
-    // console.log(state.dataCollector.dailyWeekly);
+
+    console.log(state.dataCollector);
     // console.log(state.chartCreator);
 }
 appCtrl();

@@ -347,6 +347,8 @@
         &--actualMax{stroke: $colorActualMax;}
         &--forecastMin{stroke: $colorForecastMin;}
         &--forecastMax{stroke: $colorForecastMax;}
+        &--forecastDaily{stroke: $colorForecastDaily}
+        &--forecastWeekly{stroke: $colorForecastWeekly}
     }
 
     &__mainDott{
@@ -358,6 +360,8 @@
         &--actualMax{fill: $colorActualMax;stroke: $colorActualMax;}
         &--forecastMin{fill: $colorForecastMin; stroke: $colorForecastMin;}
         &--forecastMax{fill: $colorForecastMax; stroke: $colorForecastMax;}
+        &--forecastDaily{fill: $colorForecastDaily; stroke: $colorForecastDaily}
+        &--forecastWeekly{fill: $colorForecastWeekly; stroke: $colorForecastWeekly}
     }
 
 }
